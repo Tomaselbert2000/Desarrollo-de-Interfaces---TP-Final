@@ -6,7 +6,7 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CourseScreenPreview">
+      <SelectionState runConfigName="CourseMenu">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
