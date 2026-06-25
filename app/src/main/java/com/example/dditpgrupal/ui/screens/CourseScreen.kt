@@ -83,10 +83,8 @@ fun CourseScreen(courseList: List<Course> = dummyCourseList) {
                             )
                         },
                         singleLine = true,
-                        // 1. Solo ocupamos el ancho disponible
                         modifier = Modifier.fillMaxWidth(),
                         textStyle = MaterialTheme.typography.bodyMedium,
-                        // 2. Volvemos invisibles el fondo y las líneas del componente
                         colors =
                             TextFieldDefaults.colors(
                                 focusedContainerColor = Color.Transparent,

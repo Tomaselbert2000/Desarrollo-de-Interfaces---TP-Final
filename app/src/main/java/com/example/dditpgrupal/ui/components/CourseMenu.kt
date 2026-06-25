@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 
 private val tabs = listOf("Cronograma", "Material", "Práctica", "Info")
 
@@ -101,10 +102,20 @@ fun CourseMenu() {
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
             when (selectedTabIndex) {
-                0 -> TabContent("Cronograma de cursada")
-                1 -> TabContent("Materiales de estudio")
-                2 -> TabContent("Prácticas y trabajos")
-                3 -> TabContent("Información general")
+                0 -> {
+                }
+
+                1 -> {
+                    ClassModuleListScreen()
+                }
+
+                2 -> {
+                    TabContent("Prácticas y trabajos")
+                }
+
+                3 -> {
+                    TabContent("Información general")
+                }
             }
         }
     }
