@@ -1,9 +1,11 @@
 package com.example.dditpgrupal
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -18,9 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.dditpgrupal.sealedclass.NavigationRoute
 import com.example.dditpgrupal.sealedclass.navigationRouteList
+import com.example.dditpgrupal.ui.screens.CourseScreen
 import com.example.dditpgrupal.ui.theme.DDITPGrupalTheme
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -49,7 +53,8 @@ class MainActivity : ComponentActivity() {
                             NavigationRoute.Home.route -> {
                             }
 
-                            NavigationRoute.Assignments.route -> {
+                            NavigationRoute.Courses.route -> {
+                                CourseScreen()
                             }
 
                             NavigationRoute.Messages.route -> {

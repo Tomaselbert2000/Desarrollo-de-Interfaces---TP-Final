@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 val navigationRouteList =
     listOf(
         NavigationRoute.Home,
-        NavigationRoute.Assignments,
+        NavigationRoute.Courses,
         NavigationRoute.Messages,
         NavigationRoute.ProfileInfo,
     )
@@ -22,7 +22,7 @@ sealed class NavigationRoute(
 ) {
     object Home : NavigationRoute("home", "Inicio", Icons.Filled.Home)
 
-    object Assignments : NavigationRoute("assigments", "Materias", Icons.Filled.Book)
+    object Courses : NavigationRoute("courses", "Materias", Icons.Filled.Book)
 
     object Messages : NavigationRoute("messages", "Mensajes", Icons.Filled.Email)
 
