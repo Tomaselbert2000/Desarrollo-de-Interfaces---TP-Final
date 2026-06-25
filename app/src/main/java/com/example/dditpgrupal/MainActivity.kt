@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun Greeting(
     name: String,
@@ -41,6 +42,7 @@ fun Greeting(
     )
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
