@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,21 +58,29 @@ fun PracticeCard(practice: Practice) {
                     .padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Icon(
+                imageVector = practice.status.icon(),
+                contentDescription = practice.status.name,
+                tint = practice.status.statusColor(),
+                modifier = Modifier.size(48.dp),
+            )
+
             Text(
                 text = practice.name,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(start = 12.dp),
             )
 
-            Icon(
-                imageVector = practice.status.icon(),
-                contentDescription = practice.status.name,
-                tint = practice.status.statusColor(),
-                modifier = Modifier.size(24.dp),
-            )
+            IconButton(onClick = { }, modifier = Modifier.padding(start = 16.dp)) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "Ver detalle",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
@@ -79,5 +89,5 @@ fun PracticeCard(practice: Practice) {
 @Preview
 @Composable
 private fun PracticeCardPreview() {
-    PracticeCard(practice = dummyPracticeList[0])
+    PracticeCard(practice = dummyPracticeList[1])
 }
