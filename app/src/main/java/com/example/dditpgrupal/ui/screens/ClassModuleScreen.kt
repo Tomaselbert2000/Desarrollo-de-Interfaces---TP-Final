@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.UnfoldLess
+import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
@@ -39,7 +43,9 @@ import com.example.dditpgrupal.ui.components.ClassModuleCard
 fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedType by remember { mutableStateOf<String?>(null) }
-    var expanded by remember { mutableStateOf(false) }
+    var showingDropdown by remember { mutableStateOf(false) }
+    var allExpanded by remember { mutableStateOf(false) }
+    var expandedModules by remember { mutableStateOf(setOf<String>()) }
 
     val allTypes =
         remember(moduleList) {
@@ -71,6 +77,7 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Buscar",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             },
             singleLine = true,
@@ -91,7 +98,7 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
         ) {
             FilterChip(
                 selected = selectedType != null,
-                onClick = { expanded = true },
+                onClick = { showingDropdown = true },
                 label = {
                     Text(
                         text = selectedType ?: "Tipo",
@@ -102,20 +109,34 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
                     Icon(
                         imageVector = Icons.Default.FilterAlt,
                         contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(end = 4.dp),
                     )
                 },
             )
 
+            Spacer(modifier = Modifier.weight(1f))
+
+            IconButton(onClick = {
+                allExpanded = !allExpanded
+                expandedModules = if (allExpanded) moduleList.map { it.moduleName }.toSet() else emptySet()
+            }) {
+                Icon(
+                    imageVector = if (allExpanded) Icons.Default.UnfoldLess else Icons.Default.UnfoldMore,
+                    contentDescription = if (allExpanded) "Contraer todo" else "Expandir todo",
+                    tint = MaterialTheme.colorScheme.tertiary,
+                )
+            }
+
             DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
+                expanded = showingDropdown,
+                onDismissRequest = { showingDropdown = false },
             ) {
                 DropdownMenuItem(
                     text = { Text("Todos") },
                     onClick = {
                         selectedType = null
-                        expanded = false
+                        showingDropdown = false
                     },
                 )
                 allTypes.forEach { type ->
@@ -123,7 +144,7 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
                         text = { Text(type) },
                         onClick = {
                             selectedType = type
-                            expanded = false
+                            showingDropdown = false
                         },
                     )
                 }
@@ -148,7 +169,18 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(filteredModuleList, key = { it.moduleName }) { module ->
-                    ClassModuleCard(module = module)
+                    ClassModuleCard(
+                        module = module,
+                        isExpanded = module.moduleName in expandedModules,
+                        onToggle = {
+                            expandedModules = if (module.moduleName in expandedModules) {
+                                expandedModules - module.moduleName
+                            } else {
+                                expandedModules + module.moduleName
+                            }
+                            allExpanded = filteredModuleList.all { it.moduleName in expandedModules }
+                        },
+                    )
                 }
             }
         }

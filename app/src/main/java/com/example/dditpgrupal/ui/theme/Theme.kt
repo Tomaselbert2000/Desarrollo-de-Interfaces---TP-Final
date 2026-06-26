@@ -13,21 +13,37 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme =
     darkColorScheme(
         primary = PrimaryDark,
-        secondary = SecondaryDark,
         onPrimary = OnPrimaryDark,
+        secondary = SecondaryDark,
         onSecondary = OnSecondaryDark,
+        tertiary = TertiaryDark,
+        onTertiary = OnTertiaryDark,
+        error = ErrorDark,
+        errorContainer = ErrorContainerDark,
+        onErrorContainer = OnErrorContainerDark,
         background = BackgroundDark,
         surface = SurfaceDark,
+        surfaceVariant = SurfaceVariantDark,
+        onSurfaceVariant = OnSurfaceVariantDark,
+        outline = OutlineDark,
     )
 
 private val LightColorScheme =
     lightColorScheme(
         primary = PrimaryLight,
-        secondary = SecondaryLight,
         onPrimary = OnPrimaryLight,
+        secondary = SecondaryLight,
         onSecondary = OnSecondaryLight,
+        tertiary = TertiaryLight,
+        onTertiary = OnTertiaryLight,
+        error = ErrorLight,
+        errorContainer = ErrorContainerLight,
+        onErrorContainer = OnErrorContainerLight,
         background = BackgroundLight,
         surface = SurfaceLight,
+        surfaceVariant = SurfaceVariantLight,
+        onSurfaceVariant = OnSurfaceVariantLight,
+        outline = OutlineLight,
     )
 
 @Suppress("ktlint:standard:function-naming")

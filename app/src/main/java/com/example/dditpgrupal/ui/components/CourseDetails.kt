@@ -51,6 +51,7 @@ fun CourseDetails(course: Course) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -87,6 +88,7 @@ fun CourseDetails(course: Course) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -111,6 +113,7 @@ fun CourseDetails(course: Course) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -183,11 +186,12 @@ private fun InfoRow(
     }
 }
 
+@Composable
 private fun statusInfo(absences: Int): Pair<String, Color> =
     when {
-        absences <= 2 -> "Regular" to Color(0xFF4CAF50)
-        absences == 3 -> "Atención" to Color(0xFFFFC107)
-        else -> "Libre" to Color(0xFFF44336)
+        absences <= 2 -> "Regular" to MaterialTheme.colorScheme.primary
+        absences == 3 -> "Atención" to MaterialTheme.colorScheme.tertiary
+        else -> "Libre" to MaterialTheme.colorScheme.error
     }
 
 @RequiresApi(Build.VERSION_CODES.O)

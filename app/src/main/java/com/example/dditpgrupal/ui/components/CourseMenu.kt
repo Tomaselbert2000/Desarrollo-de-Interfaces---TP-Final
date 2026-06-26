@@ -25,15 +25,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Course
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
+import com.example.dditpgrupal.ui.screens.NotepadScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
 import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen
 import com.example.dditpgrupal.ui.screens.ScheduleScreen
 
-private val tabs = listOf("Cronograma", "Material", "Práctica", "Info")
+private val tabs = listOf("Cronograma", "Material", "Práctica", "Bloc de notas", "Info")
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
@@ -132,8 +134,21 @@ fun CourseMenu(
             }
 
             3 -> {
+
+                NotepadScreen(course.courseNotes)
+            }
+
+            4 -> {
                 CourseDetails(course)
             }
         }
     }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun CourseMenuPreview() {
+    CourseMenu(dummyCourseList.first())
 }

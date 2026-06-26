@@ -49,7 +49,7 @@ fun StudyMaterialCard(
             Icon(
                 imageVector = material.icon,
                 contentDescription = material.type,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.size(24.dp),
             )
 
