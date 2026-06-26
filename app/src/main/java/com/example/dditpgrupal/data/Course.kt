@@ -17,8 +17,11 @@ val dummyCourseList =
             CourseMode.PRESENCIAL,
             listOf("Heliana Vera", "Gonzalo Rivas"),
             listOf(
+                LocalDate.of(2026, 4, 22),
                 LocalDate.of(2026, 5, 20),
                 LocalDate.of(2026, 6, 30),
+                LocalDate.of(2026, 7, 1),
+                LocalDate.of(2026, 7, 13),
             ),
             absences = 0,
             studentsAtRisk = null,

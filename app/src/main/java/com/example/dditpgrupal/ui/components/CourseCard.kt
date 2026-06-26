@@ -35,6 +35,7 @@ import com.example.dditpgrupal.data.dummyCourseList
 fun CourseCard(
     course: Course,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -77,7 +78,7 @@ fun CourseCard(
             }
 
             IconButton(
-                onClick = { },
+                onClick = onClick,
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,

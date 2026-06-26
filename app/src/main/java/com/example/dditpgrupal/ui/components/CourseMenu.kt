@@ -8,41 +8,55 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Course
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
+import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen
+import com.example.dditpgrupal.ui.screens.ScheduleScreen
 
 private val tabs = listOf("Cronograma", "Material", "Práctica", "Info")
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
+enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA }
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Suppress("ktlint:standard:function-naming")
 @Composable
-fun CourseMenu(course: Course) {
+fun CourseMenu(
+    course: Course,
+    onBackClick: () -> Unit = {},
+) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var currentScreen by remember { mutableStateOf(ScreenView.MENU_PRINCIPAL) }
+
+    if (currentScreen == ScreenView.ENVIAR_PRACTICA) {
+        PracticeSubmitScreen(
+            onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
+            onSaveDraft = { _ -> },
+            onSend = { _, _ -> currentScreen = ScreenView.MENU_PRINCIPAL },
+        )
+        return
+    }
 
     Column(
         modifier =
@@ -57,7 +71,7 @@ fun CourseMenu(course: Course) {
                     .padding(end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = { }, modifier = Modifier.padding(8.dp)) {
+            IconButton(onClick = onBackClick, modifier = Modifier.padding(8.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = "Volver",
@@ -76,17 +90,9 @@ fun CourseMenu(course: Course) {
             )
         }
 
-        ScrollableTabRow(
-            edgePadding = 0.dp,
+        SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
-            indicator = { tabPositions ->
-                SecondaryIndicator(
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            },
+            edgePadding = 0.dp,
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -110,39 +116,24 @@ fun CourseMenu(course: Course) {
             }
         }
 
-        Card(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-        ) {
-            when (selectedTabIndex) {
-                0 -> {
-                }
+        when (selectedTabIndex) {
+            0 -> {
+                ScheduleScreen(dummyCourseList.first())
+            }
 
-                1 -> {
-                    ClassModuleListScreen()
-                }
+            1 -> {
+                ClassModuleListScreen()
+            }
 
-                2 -> {
-                    PracticeListScreen()
-                }
+            2 -> {
+                PracticeListScreen(onPracticeSubmit = {
+                    currentScreen = ScreenView.ENVIAR_PRACTICA
+                })
+            }
 
-                3 -> {
-                    CourseDetails(course)
-                }
+            3 -> {
+                CourseDetails(course)
             }
         }
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Suppress("ktlint:standard:function-naming")
-@Preview
-@Composable
-fun CourseMenuPreview() {
-    CourseMenu(course = dummyCourseList.first())
 }

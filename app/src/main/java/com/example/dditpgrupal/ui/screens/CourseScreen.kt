@@ -46,7 +46,10 @@ import com.example.dditpgrupal.ui.components.CourseCard
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CourseScreen(courseList: List<Course> = dummyCourseList) {
+fun CourseScreen(
+    courseList: List<Course> = dummyCourseList,
+    onCourseClick: (Int) -> Unit = {},
+) {
     var isSearchActive by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
@@ -126,8 +129,8 @@ fun CourseScreen(courseList: List<Course> = dummyCourseList) {
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(courseList, key = { it.commission }) { course ->
-                CourseCard(course = course)
+            items(courseList.indices.toList(), key = { courseList[it].commission }) { index ->
+                CourseCard(course = courseList[index], onClick = { onCourseClick(index) })
             }
         }
     }
