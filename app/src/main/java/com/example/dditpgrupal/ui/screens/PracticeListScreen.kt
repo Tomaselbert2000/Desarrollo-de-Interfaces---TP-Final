@@ -9,20 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.dditpgrupal.data.ClassModule
-import com.example.dditpgrupal.data.dummyModuleList
-import com.example.dditpgrupal.ui.components.ClassModuleCard
+import com.example.dditpgrupal.data.Practice
+import com.example.dditpgrupal.data.dummyPracticeList
+import com.example.dditpgrupal.ui.components.PracticeCard
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
+fun PracticeListScreen(practiceList: List<Practice> = dummyPracticeList) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(moduleList, key = { it.moduleName }) { module ->
-            ClassModuleCard(module = module)
+        items(practiceList, key = { it.name }) { practice ->
+            PracticeCard(practice = practice)
         }
     }
 }
@@ -30,6 +30,6 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
 @Suppress("ktlint:standard:function-naming")
 @Preview
 @Composable
-private fun ClassModuleListScreenPreview() {
-    ClassModuleListScreen(moduleList = dummyModuleList)
+private fun PracticeListScreenPreview() {
+    PracticeListScreen(practiceList = dummyPracticeList)
 }

@@ -3,6 +3,7 @@ package com.example.dditpgrupal.data
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
+import com.example.dditpgrupal.data.enums.CourseMode
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)

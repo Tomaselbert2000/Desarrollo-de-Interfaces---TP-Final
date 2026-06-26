@@ -1,4 +1,4 @@
-package com.example.dditpgrupal.data
+package com.example.dditpgrupal.data.enums
 
 enum class CourseMode {
     PRESENCIAL,

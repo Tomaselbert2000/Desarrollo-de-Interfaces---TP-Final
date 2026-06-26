@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
+import com.example.dditpgrupal.ui.screens.PracticeListScreen
 
 private val tabs = listOf("Cronograma", "Material", "Práctica", "Info")
 
@@ -110,7 +111,7 @@ fun CourseMenu() {
                 }
 
                 2 -> {
-                    TabContent("Prácticas y trabajos")
+                    PracticeListScreen()
                 }
 
                 3 -> {
