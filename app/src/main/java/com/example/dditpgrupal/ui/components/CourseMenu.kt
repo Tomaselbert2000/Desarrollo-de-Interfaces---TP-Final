@@ -1,7 +1,8 @@
 package com.example.dditpgrupal.ui.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,14 +31,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dditpgrupal.data.Course
+import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
 
 private val tabs = listOf("Cronograma", "Material", "Práctica", "Info")
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun CourseMenu() {
+fun CourseMenu(course: Course) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     Column(
@@ -47,7 +51,10 @@ fun CourseMenu() {
                 .background(MaterialTheme.colorScheme.background),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { }, modifier = Modifier.padding(8.dp)) {
@@ -57,6 +64,16 @@ fun CourseMenu() {
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+
+            Text(
+                text = course.name,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp),
+            )
         }
 
         ScrollableTabRow(
@@ -115,35 +132,17 @@ fun CourseMenu() {
                 }
 
                 3 -> {
-                    TabContent("Información general")
+                    CourseDetails(course)
                 }
             }
         }
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
-@Composable
-private fun TabContent(text: String) {
-    Column(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Preview
 @Composable
 fun CourseMenuPreview() {
-    CourseMenu()
+    CourseMenu(course = dummyCourseList.first())
 }

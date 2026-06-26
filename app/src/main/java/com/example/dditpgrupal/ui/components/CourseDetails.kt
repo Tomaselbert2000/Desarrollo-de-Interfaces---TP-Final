@@ -8,73 +8,47 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.Rule
+import androidx.compose.material.icons.filled.Computer
+import androidx.compose.material.icons.filled.Domain
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Course
 import com.example.dditpgrupal.data.dummyCourseList
-
-private fun statusInfo(absences: Int): Pair<String, Color> =
-    when {
-        absences <= 2 -> "Regular" to Color(0xFF4CAF50)
-        absences == 3 -> "Atención" to Color(0xFFFFC107)
-        else -> "Libre" to Color(0xFFF44336)
-    }
+import com.example.dditpgrupal.data.enums.CourseMode
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun CourseDetails(
-    course: Course,
-    onBackClick: () -> Unit,
-) {
+fun CourseDetails(course: Course) {
     Column(
         modifier =
             Modifier
+                .padding(16.dp)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = "Volver",
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-            Text(
-                text = course.name,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
-
         Card(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         ) {
@@ -82,40 +56,91 @@ fun CourseDetails(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                InfoRow(label = "Comisión", value = course.commission)
-                InfoRow(label = "Modalidad de cursada", value = course.mode.name)
-                InfoRow(label = "Departamento", value = course.departament)
-                InfoRow(label = "Docente/s", value = course.teacher.joinToString(", "))
-
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                )
-
                 Text(
-                    text = "Estado actual de cursada",
+                    text = "Detalles académicos",
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
 
-                if (course.absences != null) {
+                InfoRow(
+                    icon = Icons.Default.Domain,
+                    label = "Departamento",
+                    text = course.departament,
+                )
+
+                InfoRow(
+                    icon = Icons.Default.Tag,
+                    label = "Comisión",
+                    text = course.commission,
+                )
+
+                InfoRow(
+                    icon = if (course.mode == CourseMode.PRESENCIAL) Icons.Default.School else Icons.Default.Computer,
+                    label = "Modalidad",
+                    text = course.mode.name,
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Text(
+                    text = "Equipo docente",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                InfoRow(
+                    icon = Icons.Default.Group,
+                    label = "Docente/s",
+                    text = course.teacher.joinToString(", "),
+                )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Text(
+                    text = "Registro de faltas",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
                     InfoRow(
-                        label = "Faltas registradas",
-                        value = course.absences.toString(),
+                        icon = Icons.AutoMirrored.Filled.Rule,
+                        label = "Faltas",
+                        text = "${course.absences ?: 0}",
+                        modifier = Modifier.weight(1f),
                     )
 
-                    val (text, color) = statusInfo(course.absences)
+                    val absences = course.absences ?: 0
+                    val (status, color) = statusInfo(absences)
                     Text(
-                        text = text,
+                        text = status,
                         style = MaterialTheme.typography.titleLarge,
-                        color = color,
                         fontWeight = FontWeight.Bold,
-                    )
-                } else {
-                    Text(
-                        text = "Sin registro de inasistencias",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = color,
                     )
                 }
             }
@@ -126,33 +151,49 @@ fun CourseDetails(
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun InfoRow(
+    icon: ImageVector,
     label: String,
-    value: String,
+    text: String,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier,
+        verticalAlignment = Alignment.Top,
     ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(24.dp),
         )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
+        Column(
+            modifier = Modifier.padding(start = 12.dp),
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
+private fun statusInfo(absences: Int): Pair<String, Color> =
+    when {
+        absences <= 2 -> "Regular" to Color(0xFF4CAF50)
+        absences == 3 -> "Atención" to Color(0xFFFFC107)
+        else -> "Libre" to Color(0xFFF44336)
+    }
+
 @RequiresApi(Build.VERSION_CODES.O)
+@Suppress("ktlint:standard:function-naming")
 @Preview
 @Composable
-fun CourseDetailPreview() {
-    CourseDetails(
-        dummyCourseList.first(),
-        onBackClick = {},
-    )
+private fun CourseDetailsPreview() {
+    CourseDetails(course = dummyCourseList.first())
 }
