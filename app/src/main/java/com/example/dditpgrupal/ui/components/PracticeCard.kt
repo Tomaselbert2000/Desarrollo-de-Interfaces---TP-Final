@@ -45,7 +45,7 @@ private fun PracticeStatus.statusColor(): Color =
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun PracticeCard(practice: Practice) {
+fun PracticeCard(practice: Practice, onSubmitClick: () -> Unit = {}) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -74,7 +74,7 @@ fun PracticeCard(practice: Practice) {
                 modifier = Modifier.weight(1f).padding(start = 12.dp),
             )
 
-            IconButton(onClick = { }, modifier = Modifier.padding(start = 16.dp)) {
+            IconButton(onClick = onSubmitClick, modifier = Modifier.padding(start = 16.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = "Ver detalle",
