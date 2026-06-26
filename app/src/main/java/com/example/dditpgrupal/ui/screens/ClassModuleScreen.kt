@@ -77,7 +77,7 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
             textStyle = MaterialTheme.typography.bodyMedium,
         )
 
