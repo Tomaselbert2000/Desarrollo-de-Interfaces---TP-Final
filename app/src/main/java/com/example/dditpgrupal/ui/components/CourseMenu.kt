@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,9 +29,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Course
+import com.example.dditpgrupal.data.Note
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 import com.example.dditpgrupal.ui.screens.NotepadScreen
+import com.example.dditpgrupal.ui.screens.NoteCreationScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
 import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen
 import com.example.dditpgrupal.ui.screens.ScheduleScreen
@@ -39,7 +42,7 @@ private val tabs = listOf("Cronograma", "Material", "Práctica", "Bloc de notas"
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
-enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA }
+enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA, CREAR_NOTA }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
@@ -50,12 +53,24 @@ fun CourseMenu(
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     var currentScreen by remember { mutableStateOf(ScreenView.MENU_PRINCIPAL) }
+    val notes = remember { mutableStateListOf<Note>().also { it.addAll(course.courseNotes) } }
 
     if (currentScreen == ScreenView.ENVIAR_PRACTICA) {
         PracticeSubmitScreen(
             onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
             onSaveDraft = { _ -> },
             onSend = { _, _ -> currentScreen = ScreenView.MENU_PRINCIPAL },
+        )
+        return
+    }
+
+    if (currentScreen == ScreenView.CREAR_NOTA) {
+        NoteCreationScreen(
+            onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
+            onSave = { text, isImportant ->
+                notes.add(Note(text, text, isImportant, java.time.LocalDate.now()))
+                currentScreen = ScreenView.MENU_PRINCIPAL
+            },
         )
         return
     }
@@ -120,7 +135,7 @@ fun CourseMenu(
 
         when (selectedTabIndex) {
             0 -> {
-                ScheduleScreen(dummyCourseList.first())
+                ScheduleScreen(course)
             }
 
             1 -> {
@@ -134,8 +149,11 @@ fun CourseMenu(
             }
 
             3 -> {
-
-                NotepadScreen(course.courseNotes)
+                NotepadScreen(
+                    notes = notes,
+                    onAddNote = { currentScreen = ScreenView.CREAR_NOTA },
+                    onDeleteNote = { note -> notes.remove(note) },
+                )
             }
 
             4 -> {

@@ -42,10 +42,14 @@ import com.example.dditpgrupal.data.dummyNotesList
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NotepadScreen(notes: List<Note>) {
+fun NotepadScreen(
+    notes: List<Note>,
+    onAddNote: () -> Unit = {},
+    onDeleteNote: (Note) -> Unit = {},
+) {
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { }) {
+            FloatingActionButton(onClick = onAddNote) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Agregar nota",
@@ -92,7 +96,7 @@ fun NotepadScreen(notes: List<Note>) {
                 verticalItemSpacing = 12.dp,
             ) {
                 items(notes, key = { it.name + it.creationDate }) { note ->
-                    NoteCard(note = note)
+                    NoteCard(note = note, onDeleteNote = { onDeleteNote(note) })
                 }
             }
         }
@@ -102,7 +106,10 @@ fun NotepadScreen(notes: List<Note>) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
-private fun NoteCard(note: Note) {
+private fun NoteCard(
+    note: Note,
+    onDeleteNote: () -> Unit = {},
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -152,7 +159,7 @@ private fun NoteCard(note: Note) {
                     modifier = Modifier.weight(1f),
                 )
 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onDeleteNote) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Eliminar nota",

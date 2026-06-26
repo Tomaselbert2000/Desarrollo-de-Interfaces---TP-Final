@@ -121,6 +121,13 @@ fun CourseScreen(
             )
         },
     ) { innerPadding ->
+        val filteredCourses =
+            if (searchText.isBlank()) {
+                courseList
+            } else {
+                courseList.filter { it.name.contains(searchText, ignoreCase = true) }
+            }
+
         LazyColumn(
             modifier =
                 Modifier
@@ -129,8 +136,9 @@ fun CourseScreen(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(courseList.indices.toList(), key = { courseList[it].commission }) { index ->
-                CourseCard(course = courseList[index], onClick = { onCourseClick(index) })
+            items(filteredCourses.indices.toList(), key = { filteredCourses[it].commission }) { index ->
+                val originalIndex = courseList.indexOf(filteredCourses[index])
+                CourseCard(course = filteredCourses[index], onClick = { onCourseClick(originalIndex) })
             }
         }
     }
