@@ -30,11 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Course
 import com.example.dditpgrupal.data.Note
+import com.example.dditpgrupal.data.Practice
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 import com.example.dditpgrupal.ui.screens.NotepadScreen
 import com.example.dditpgrupal.ui.screens.NoteCreationScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
+import com.example.dditpgrupal.ui.screens.PracticeStatusScreen
 import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen
 import com.example.dditpgrupal.ui.screens.ScheduleScreen
 
@@ -42,7 +44,7 @@ private val tabs = listOf("Cronograma", "Material", "Práctica", "Bloc de notas"
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
-enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA, CREAR_NOTA }
+enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA, CREAR_NOTA, VER_ESTADO_PRACTICA }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
@@ -53,7 +55,16 @@ fun CourseMenu(
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     var currentScreen by remember { mutableStateOf(ScreenView.MENU_PRINCIPAL) }
+    var selectedPractice by remember { mutableStateOf<Practice?>(null) }
     val notes = remember { mutableStateListOf<Note>().also { it.addAll(course.courseNotes) } }
+
+    if (currentScreen == ScreenView.VER_ESTADO_PRACTICA && selectedPractice != null) {
+        PracticeStatusScreen(
+            practice = selectedPractice!!,
+            onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
+        )
+        return
+    }
 
     if (currentScreen == ScreenView.ENVIAR_PRACTICA) {
         PracticeSubmitScreen(
@@ -143,9 +154,16 @@ fun CourseMenu(
             }
 
             2 -> {
-                PracticeListScreen(onPracticeSubmit = {
-                    currentScreen = ScreenView.ENVIAR_PRACTICA
-                })
+                PracticeListScreen(
+                    onPracticeSubmit = { practice ->
+                        selectedPractice = practice
+                        currentScreen = ScreenView.ENVIAR_PRACTICA
+                    },
+                    onPracticeViewStatus = { practice ->
+                        selectedPractice = practice
+                        currentScreen = ScreenView.VER_ESTADO_PRACTICA
+                    },
+                )
             }
 
             3 -> {

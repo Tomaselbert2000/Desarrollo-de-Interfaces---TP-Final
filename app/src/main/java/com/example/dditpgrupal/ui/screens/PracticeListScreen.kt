@@ -33,7 +33,11 @@ import com.example.dditpgrupal.ui.components.PracticeCard
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun PracticeListScreen(practiceList: List<Practice> = dummyPracticeList, onPracticeSubmit: (Practice) -> Unit = {}) {
+fun PracticeListScreen(
+    practiceList: List<Practice> = dummyPracticeList,
+    onPracticeSubmit: (Practice) -> Unit = {},
+    onPracticeViewStatus: (Practice) -> Unit = {},
+) {
     var selectedStatus by remember { mutableStateOf<PracticeStatus?>(null) }
     var expanded by remember { mutableStateOf(false) }
 
@@ -93,7 +97,11 @@ fun PracticeListScreen(practiceList: List<Practice> = dummyPracticeList, onPract
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             items(filteredList, key = { it.name }) { practice ->
-                PracticeCard(practice = practice, onSubmitClick = { onPracticeSubmit(practice) })
+                PracticeCard(
+                    practice = practice,
+                    onSubmitClick = { onPracticeSubmit(practice) },
+                    onViewStatusClick = { onPracticeViewStatus(practice) },
+                )
             }
         }
     }

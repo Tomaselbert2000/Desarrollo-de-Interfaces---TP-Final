@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Drafts
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -50,6 +51,7 @@ fun PracticeSubmitScreen(
     var selectedTeacher by remember { mutableStateOf(teachers.first()) }
     var expanded by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf("") }
+    var isGroupDelivery by remember { mutableStateOf(false) }
 
     Column(
         modifier =
@@ -144,6 +146,24 @@ fun PracticeSubmitScreen(
                                 .weight(0.75f),
                         textStyle = MaterialTheme.typography.bodyMedium,
                     )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = "Entrega grupal",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Checkbox(
+                            checked = isGroupDelivery,
+                            onCheckedChange = { isGroupDelivery = it },
+                        )
+                    }
 
                     Spacer(modifier = Modifier.weight(0.25f))
 
