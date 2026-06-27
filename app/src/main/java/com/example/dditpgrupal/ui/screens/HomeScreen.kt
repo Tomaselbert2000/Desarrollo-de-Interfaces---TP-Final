@@ -2,6 +2,8 @@ package com.example.dditpgrupal.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +56,12 @@ fun HomeScreen(
     newsList: List<News> = dummyNewsList,
     onNewsClick: (News) -> Unit = {},
 ) {
+    val homeBg by animateColorAsState(
+        targetValue = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.10f),
+        animationSpec = tween(400),
+        label = "homeBg",
+    )
+
     val today = LocalDate.now()
     val upcomingDates =
         courseList
@@ -61,7 +70,7 @@ fun HomeScreen(
             }.sortedBy { it.second }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(homeBg),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {

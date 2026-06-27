@@ -2,6 +2,8 @@ package com.example.dditpgrupal.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +49,14 @@ fun CourseScreen(
     var isSearchActive by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
+    val coursesBg by animateColorAsState(
+        targetValue = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.18f),
+        animationSpec = tween(400),
+        label = "coursesBg",
+    )
+
     Scaffold(
+        containerColor = coursesBg,
         topBar = {
             TopAppBar(
                 title = {
