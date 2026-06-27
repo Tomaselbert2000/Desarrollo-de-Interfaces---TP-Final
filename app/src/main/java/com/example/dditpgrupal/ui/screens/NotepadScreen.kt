@@ -3,6 +3,7 @@ package com.example.dditpgrupal.ui.screens
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,16 +14,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EditNote
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +37,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -45,8 +56,19 @@ import com.example.dditpgrupal.data.dummyNotesList
 fun NotepadScreen(
     notes: List<Note>,
     onAddNote: () -> Unit = {},
+    onEditNote: (Note) -> Unit = {},
     onDeleteNote: (Note) -> Unit = {},
 ) {
+    var filterOption by remember { mutableStateOf("Todas") }
+    var filterExpanded by remember { mutableStateOf(false) }
+
+    val filteredNotes =
+        when (filterOption) {
+            "Importantes" -> notes.filter { it.isImportant }
+            "Normal" -> notes.filter { !it.isImportant }
+            else -> notes
+        }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = onAddNote) {
@@ -58,45 +80,127 @@ fun NotepadScreen(
             }
         },
     ) { innerPadding ->
-        if (notes.isEmpty()) {
-            Box(
+        Column(
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+        ) {
+            Row(
                 modifier =
                     Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                contentAlignment = Alignment.Center,
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.EditNote,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(64.dp),
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(16.dp)
+                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                     )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
                     Text(
-                        text = "Aún no hay notas",
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = "Importantes",
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 16.dp),
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(16.dp)
+                                .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape),
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Text(
+                        text = "Normal",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Box {
+                    IconButton(onClick = { filterExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Default.FilterAlt,
+                            contentDescription = "Filtrar",
+                            tint =
+                                if (filterOption !=
+                                    "Todas"
+                                ) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = filterExpanded,
+                        onDismissRequest = { filterExpanded = false },
+                    ) {
+                        listOf("Todas", "Normal", "Importantes").forEach { option ->
+                            DropdownMenuItem(
+                                text = { Text(option) },
+                                onClick = {
+                                    filterOption = option
+                                    filterExpanded = false
+                                },
+                            )
+                        }
+                    }
+                }
             }
-        } else {
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalItemSpacing = 12.dp,
-            ) {
-                items(notes, key = { it.name + it.creationDate }) { note ->
-                    NoteCard(note = note, onDeleteNote = { onDeleteNote(note) })
+
+            if (filteredNotes.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.EditNote,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(64.dp),
+                        )
+                        Text(
+                            text = "Aún no hay notas",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(top = 16.dp),
+                        )
+                    }
+                }
+            } else {
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(2),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalItemSpacing = 12.dp,
+                ) {
+                    items(filteredNotes, key = { it.name + it.creationDate }) { note ->
+                        NoteCard(
+                            note = note,
+                            onEditNote = { onEditNote(note) },
+                            onDeleteNote = { onDeleteNote(note) },
+                        )
+                    }
                 }
             }
         }
@@ -108,6 +212,7 @@ fun NotepadScreen(
 @Composable
 private fun NoteCard(
     note: Note,
+    onEditNote: () -> Unit = {},
     onDeleteNote: () -> Unit = {},
 ) {
     Card(
@@ -121,7 +226,7 @@ private fun NoteCard(
                     if (note.isImportant) {
                         MaterialTheme.colorScheme.primaryContainer
                     } else {
-                        MaterialTheme.colorScheme.secondaryContainer
+                        MaterialTheme.colorScheme.tertiaryContainer
                     },
             ),
     ) {
@@ -158,6 +263,14 @@ private fun NoteCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
                 )
+
+                IconButton(onClick = onEditNote) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Editar nota",
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
 
                 IconButton(onClick = onDeleteNote) {
                     Icon(

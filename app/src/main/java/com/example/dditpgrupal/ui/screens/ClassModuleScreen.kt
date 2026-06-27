@@ -16,11 +16,11 @@ import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.UnfoldLess
 import androidx.compose.material.icons.filled.UnfoldMore
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -173,11 +173,12 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
                         module = module,
                         isExpanded = module.moduleName in expandedModules,
                         onToggle = {
-                            expandedModules = if (module.moduleName in expandedModules) {
-                                expandedModules - module.moduleName
-                            } else {
-                                expandedModules + module.moduleName
-                            }
+                            expandedModules =
+                                if (module.moduleName in expandedModules) {
+                                    expandedModules - module.moduleName
+                                } else {
+                                    expandedModules + module.moduleName
+                                }
                             allExpanded = filteredModuleList.all { it.moduleName in expandedModules }
                         },
                     )

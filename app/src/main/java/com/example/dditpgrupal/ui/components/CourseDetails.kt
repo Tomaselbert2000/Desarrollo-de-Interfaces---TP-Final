@@ -59,7 +59,7 @@ fun CourseDetails(course: Course) {
             ) {
                 Text(
                     text = "Detalles académicos",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -96,7 +96,7 @@ fun CourseDetails(course: Course) {
             ) {
                 Text(
                     text = "Equipo docente",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -121,7 +121,7 @@ fun CourseDetails(course: Course) {
             ) {
                 Text(
                     text = "Registro de faltas",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -141,7 +141,7 @@ fun CourseDetails(course: Course) {
                     val (status, color) = statusInfo(absences)
                     Text(
                         text = status,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = color,
                     )
@@ -167,19 +167,19 @@ private fun InfoRow(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(32.dp),
         )
         Column(
             modifier = Modifier.padding(start = 12.dp),
         ) {
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
         }

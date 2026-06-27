@@ -90,9 +90,10 @@ fun NoteCreationScreen(
                             style = MaterialTheme.typography.bodyLarge,
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
                     textStyle = MaterialTheme.typography.bodyLarge,
                 )
 

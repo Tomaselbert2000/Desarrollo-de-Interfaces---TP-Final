@@ -34,7 +34,6 @@ fun ClassModuleCard(
     isExpanded: Boolean = false,
     onToggle: () -> Unit = {},
 ) {
-
     Card(
         modifier =
             Modifier

@@ -33,8 +33,8 @@ import com.example.dditpgrupal.data.Note
 import com.example.dditpgrupal.data.Practice
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
-import com.example.dditpgrupal.ui.screens.NotepadScreen
 import com.example.dditpgrupal.ui.screens.NoteCreationScreen
+import com.example.dditpgrupal.ui.screens.NotepadScreen
 import com.example.dditpgrupal.ui.screens.PracticeListScreen
 import com.example.dditpgrupal.ui.screens.PracticeStatusScreen
 import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen

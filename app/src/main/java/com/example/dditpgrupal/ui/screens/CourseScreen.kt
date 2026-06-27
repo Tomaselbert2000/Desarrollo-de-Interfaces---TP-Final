@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -76,42 +77,51 @@ fun CourseScreen(
                     }
                 },
                 title = {
-                    TextField(
-                        value = searchText,
-                        onValueChange = { searchText = it },
-                        placeholder = {
-                            Text(
-                                text = "Buscar por nombre...",
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        textStyle = MaterialTheme.typography.bodyMedium,
-                        colors =
-                            TextFieldDefaults.colors(
-                                focusedContainerColor = Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent,
-                            ),
-                    )
+                    if (isSearchActive) {
+                        TextField(
+                            value = searchText,
+                            onValueChange = { searchText = it },
+                            placeholder = {
+                                Text(
+                                    text = "Buscar por nombre...",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                            },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            textStyle = MaterialTheme.typography.bodyMedium,
+                            colors =
+                                TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.Transparent,
+                                    unfocusedContainerColor = Color.Transparent,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent,
+                                ),
+                        )
+                    } else {
+                        Text(
+                            text = "Mis cursos",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
                 },
                 actions = {
                     IconButton(onClick = { isSearchActive = !isSearchActive }) {
                         Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Buscar",
+                            imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
+                            contentDescription = if (isSearchActive) "Cerrar búsqueda" else "Buscar",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = "Opciones",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+                    if (!isSearchActive) {
+                        IconButton(onClick = { }) {
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "Opciones",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 },
                 colors =
