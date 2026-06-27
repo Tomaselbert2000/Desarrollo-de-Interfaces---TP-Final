@@ -51,6 +51,7 @@ import java.time.LocalDate
 fun HomeScreen(
     courseList: List<Course> = dummyCourseList,
     newsList: List<News> = dummyNewsList,
+    onNewsClick: (News) -> Unit = {},
 ) {
     val today = LocalDate.now()
     val upcomingDates =
@@ -206,7 +207,7 @@ fun HomeScreen(
         items(newsList, key = { it.title }) { news ->
             NewsCard(
                 news = news,
-                onReadMore = { },
+                onReadMore = { onNewsClick(news) },
             )
         }
     }

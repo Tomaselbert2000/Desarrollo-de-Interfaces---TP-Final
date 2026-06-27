@@ -24,11 +24,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.dditpgrupal.data.dummyCourseList
+import com.example.dditpgrupal.data.dummyNewsList
 import com.example.dditpgrupal.sealedclass.navigationRouteList
 import com.example.dditpgrupal.ui.components.CourseMenu
 import com.example.dditpgrupal.ui.screens.CourseScreen
 import com.example.dditpgrupal.ui.screens.HomeScreen
 import com.example.dditpgrupal.ui.screens.MessagesScreen
+import com.example.dditpgrupal.ui.screens.NewsDetailScreen
 import com.example.dditpgrupal.ui.screens.ProfileScreen
 import com.example.dditpgrupal.ui.theme.DDITPGrupalTheme
 
@@ -88,7 +90,12 @@ fun AppNavigation() {
                 startDestination = "home",
             ) {
                 composable("home") {
-                    HomeScreen()
+                    HomeScreen(
+                        onNewsClick = { news ->
+                            val index = dummyNewsList.indexOf(news)
+                            navController.navigate("news/$index")
+                        },
+                    )
                 }
                 composable("courses") {
                     CourseScreen(
@@ -109,6 +116,16 @@ fun AppNavigation() {
                 }
                 composable("messages") {
                     MessagesScreen()
+                }
+                composable(
+                    route = "news/{newsIndex}",
+                    arguments = listOf(navArgument("newsIndex") { type = NavType.IntType }),
+                ) { backStackEntry ->
+                    val newsIndex = backStackEntry.arguments?.getInt("newsIndex") ?: 0
+                    NewsDetailScreen(
+                        news = dummyNewsList[newsIndex],
+                        onBackClick = { navController.popBackStack() },
+                    )
                 }
                 composable("profile") {
                     ProfileScreen()

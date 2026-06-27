@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,8 +55,7 @@ fun NewsCard(
                             .background(
                                 MaterialTheme.colorScheme.primaryContainer,
                                 RoundedCornerShape(4.dp),
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                            ).padding(horizontal = 8.dp, vertical = 4.dp),
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
@@ -74,6 +72,14 @@ fun NewsCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = news.subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
