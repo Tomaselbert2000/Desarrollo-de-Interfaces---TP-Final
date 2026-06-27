@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Message
 import com.example.dditpgrupal.data.dummyMessages
@@ -27,4 +28,12 @@ fun MessagesScreen(messages: List<Message> = dummyMessages) {
             MessageCard(message = message)
         }
     }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+private fun MessagesScreenPreview() {
+    MessagesScreen()
 }

@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.components.ProfileInfoRow
@@ -102,4 +103,12 @@ fun ProfileScreen() {
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Suppress("ktlint:standard:function-naming")
+@Preview
+@Composable
+private fun ProfileScreenPreview() {
+    ProfileScreen()
 }

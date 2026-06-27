@@ -1,5 +1,7 @@
 package com.example.dditpgrupal.data
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.time.LocalDate
 
 data class Message(
@@ -10,6 +12,7 @@ data class Message(
     val isRead: Boolean,
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 val dummyMessages =
     listOf(
         Message(
