@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -191,7 +192,7 @@ fun MessageResponseScreen(
                         modifier = Modifier.size(20.dp),
                     )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
                 IconButton(
                     onClick = { },
                     modifier =
@@ -214,11 +215,13 @@ fun MessageResponseScreen(
                 Box(
                     modifier =
                         Modifier
+                            .height(40.dp)
                             .background(
                                 MaterialTheme.colorScheme.primary,
                                 RoundedCornerShape(12.dp),
                             ).clickable { }
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                            .padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
