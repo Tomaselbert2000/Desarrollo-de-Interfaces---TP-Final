@@ -29,7 +29,8 @@ import com.example.dditpgrupal.sealedclass.navigationRouteList
 import com.example.dditpgrupal.ui.components.CourseMenu
 import com.example.dditpgrupal.ui.screens.CourseScreen
 import com.example.dditpgrupal.ui.screens.HomeScreen
-import com.example.dditpgrupal.ui.screens.MessagesScreen
+import com.example.dditpgrupal.ui.screens.LoginScreen
+import com.example.dditpgrupal.ui.screens.MessageScreen
 import com.example.dditpgrupal.ui.screens.NewsDetailScreen
 import com.example.dditpgrupal.ui.screens.ProfileScreen
 import com.example.dditpgrupal.ui.theme.DDITPGrupalTheme
@@ -87,8 +88,17 @@ fun AppNavigation() {
         Box(modifier = Modifier.padding(innerPadding)) {
             NavHost(
                 navController = navController,
-                startDestination = "home",
+                startDestination = "login",
             ) {
+                composable("login") {
+                    LoginScreen(
+                        onLogin = {
+                            navController.navigate("home") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        },
+                    )
+                }
                 composable("home") {
                     HomeScreen(
                         onNewsClick = { news ->
@@ -115,7 +125,7 @@ fun AppNavigation() {
                     )
                 }
                 composable("messages") {
-                    MessagesScreen()
+                    MessageScreen()
                 }
                 composable(
                     route = "news/{newsIndex}",
