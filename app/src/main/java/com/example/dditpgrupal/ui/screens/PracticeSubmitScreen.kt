@@ -1,17 +1,27 @@
 package com.example.dditpgrupal.ui.screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.AttachFile
+import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Drafts
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,13 +31,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,6 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 private val teachers = listOf("Heliana Vera", "Gonzalo Rivas", "Liliana Romano", "Federico Pileci")
+private const val MAX_CHARS = 1000
 
 @Suppress("ktlint:standard:function-naming", "DEPRECATION")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +65,9 @@ fun PracticeSubmitScreen(
     var selectedTeacher by remember { mutableStateOf(teachers.first()) }
     var expanded by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf("") }
+    var charCount by remember { mutableIntStateOf(0) }
     var isGroupDelivery by remember { mutableStateOf(false) }
+    var hasAttachment by remember { mutableStateOf(false) }
 
     Column(
         modifier =
@@ -70,7 +86,6 @@ fun PracticeSubmitScreen(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-
             Text(
                 text = "Entrega de práctica",
                 style = MaterialTheme.typography.titleLarge,
@@ -80,13 +95,12 @@ fun PracticeSubmitScreen(
             )
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         Card(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            modifier = Modifier.fillMaxWidth().weight(1f),
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
@@ -96,100 +110,200 @@ fun PracticeSubmitScreen(
                         .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                Text(
-                    text = "Destinatario",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = !expanded },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    OutlinedTextField(
-                        value = selectedTeacher,
-                        onValueChange = {},
-                        readOnly = true,
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
-                        textStyle = MaterialTheme.typography.bodyMedium,
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp),
                     )
-                    ExposedDropdownMenu(
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "Destinatario",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontWeight = FontWeight.Medium,
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    ExposedDropdownMenuBox(
                         expanded = expanded,
-                        onDismissRequest = { expanded = false },
+                        onExpandedChange = { expanded = !expanded },
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        teachers.forEach { teacher ->
-                            DropdownMenuItem(
-                                text = { Text(teacher) },
-                                onClick = {
-                                    selectedTeacher = teacher
-                                    expanded = false
-                                },
-                            )
+                        OutlinedTextField(
+                            value = selectedTeacher,
+                            onValueChange = {},
+                            readOnly = true,
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                            textStyle = MaterialTheme.typography.bodyMedium,
+                        )
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                        ) {
+                            teachers.forEach { teacher ->
+                                DropdownMenuItem(
+                                    text = { Text(teacher) },
+                                    onClick = {
+                                        selectedTeacher = teacher
+                                        expanded = false
+                                    },
+                                )
+                            }
                         }
                     }
                 }
 
-                Column(
-                    modifier = Modifier.weight(1f),
+                HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+
+                OutlinedTextField(
+                    value = message,
+                    onValueChange = {
+                        if (it.length <= MAX_CHARS) {
+                            message = it
+                            charCount = it.length
+                        }
+                    },
+                    placeholder = { Text("Escribí tu mensaje...") },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.bodyMedium,
+                    colors =
+                        OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        ),
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    OutlinedTextField(
-                        value = message,
-                        onValueChange = { message = it },
-                        placeholder = { Text("Escribir mensaje...") },
-                        shape = RoundedCornerShape(12.dp),
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .weight(0.75f),
-                        textStyle = MaterialTheme.typography.bodyMedium,
+                    Text(
+                        text = "$charCount/$MAX_CHARS",
+                        style = MaterialTheme.typography.labelSmall,
+                        color =
+                            if (charCount >= MAX_CHARS) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
                     )
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
+                    if (hasAttachment) {
+                        Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Entrega grupal",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-
-                        Spacer(modifier = Modifier.weight(1f))
-
-                        Checkbox(
-                            checked = isGroupDelivery,
-                            onCheckedChange = { isGroupDelivery = it },
+                            text = "1 archivo adjunto",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     }
 
-                    Spacer(modifier = Modifier.weight(0.25f))
+                    Spacer(modifier = Modifier.weight(1f))
+                }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                    ) {
-                        IconButton(onClick = onAttachFile) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Groups,
+                        contentDescription = null,
+                        tint = if (isGroupDelivery) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(20.dp),
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Entrega grupal",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Checkbox(
+                        checked = isGroupDelivery,
+                        onCheckedChange = { isGroupDelivery = it },
+                    )
+                }
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        IconButton(
+                            onClick = { hasAttachment = !hasAttachment },
+                            modifier =
+                                Modifier
+                                    .size(40.dp)
+                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                        ) {
                             Icon(
-                                imageVector = Icons.Default.AttachFile,
+                                imageVector = if (hasAttachment) Icons.Default.Description else Icons.Default.AttachFile,
                                 contentDescription = "Adjuntar archivo",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = if (hasAttachment) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(20.dp),
                             )
                         }
-                        IconButton(onClick = { onSaveDraft(message) }) {
+                        IconButton(
+                            onClick = { },
+                            modifier =
+                                Modifier
+                                    .size(40.dp)
+                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Image,
+                                contentDescription = "Adjuntar imagen",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(20.dp),
+                            )
+                        }
+                        IconButton(
+                            onClick = { onSaveDraft(message) },
+                            modifier =
+                                Modifier
+                                    .size(40.dp)
+                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Drafts,
                                 contentDescription = "Guardar borrador",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.size(20.dp),
                             )
                         }
-                        IconButton(onClick = { onSend(selectedTeacher, message) }) {
+                    }
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Box(
+                        modifier =
+                            Modifier
+                                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(14.dp))
+                                .clickable { onSend(selectedTeacher, message) }
+                                .padding(horizontal = 24.dp, vertical = 12.dp),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Send,
-                                contentDescription = "Enviar",
-                                tint = MaterialTheme.colorScheme.primary,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.size(18.dp),
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "Enviar",
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                fontWeight = FontWeight.Medium,
                             )
                         }
                     }
