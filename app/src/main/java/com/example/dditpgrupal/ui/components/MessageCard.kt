@@ -3,6 +3,7 @@ package com.example.dditpgrupal.ui.components
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +23,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Message
+import com.example.dditpgrupal.data.dummyMessages
 
 @Suppress("ktlint:standard:function-naming")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MessageCard(message: Message) {
+fun MessageCard(
+    message: Message,
+    onClick: (Message) -> Unit = {},
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().clickable { onClick(message) },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =
@@ -109,4 +115,12 @@ fun MessageCard(message: Message) {
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Suppress("ktlint:standard:function-naming")
+@Preview
+@Composable
+fun MessageCardPreview() {
+    MessageCard(dummyMessages.first())
 }

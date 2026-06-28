@@ -30,13 +30,22 @@ import com.example.dditpgrupal.data.dummyMessages
 import com.example.dditpgrupal.ui.components.MessageCard
 
 @Suppress("ktlint:standard:function-naming")
-enum class MessageView { LIST, NEW_MESSAGE }
+enum class MessageView { LIST, NEW_MESSAGE, RESPONSE }
 
 @Suppress("ktlint:standard:function-naming")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MessageScreen(messages: List<Message> = dummyMessages) {
     var currentScreen by remember { mutableStateOf(MessageView.LIST) }
+    var selectedMessage by remember { mutableStateOf<Message?>(null) }
+
+    if (currentScreen == MessageView.RESPONSE && selectedMessage != null) {
+        MessageResponseScreen(
+            message = selectedMessage!!,
+            onBackClick = { currentScreen = MessageView.LIST },
+        )
+        return
+    }
 
     if (currentScreen == MessageView.NEW_MESSAGE) {
         NewMessageScreen(onBackClick = { currentScreen = MessageView.LIST })
@@ -65,12 +74,18 @@ fun MessageScreen(messages: List<Message> = dummyMessages) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(messages, key = { it.subject + it.date }) { message ->
-                MessageCard(message = message)
+                MessageCard(
+                    message = message,
+                    onClick = {
+                        selectedMessage = it
+                        currentScreen = MessageView.RESPONSE
+                    },
+                )
             }
         }
     }
 }
- 
+
 @Suppress("ktlint:standard:function-naming")
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
