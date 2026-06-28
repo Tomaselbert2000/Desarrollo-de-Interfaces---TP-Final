@@ -250,7 +250,7 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                                 modifier = Modifier.size(20.dp),
                             )
                         }
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         IconButton(
                             onClick = { },
                             modifier =
@@ -271,9 +271,11 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                         Box(
                             modifier =
                                 Modifier
+                                    .height(40.dp)
                                     .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp))
                                     .clickable { }
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                    .padding(horizontal = 16.dp),
+                            contentAlignment = Alignment.Center,
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
