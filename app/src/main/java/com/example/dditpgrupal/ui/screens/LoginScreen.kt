@@ -86,14 +86,14 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "DDI TP Grupal",
+            text = "UNLaM",
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
         )
 
         Text(
-            text = "Plataforma educativa",
+            text = "Materias Interactivas en Línea",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
