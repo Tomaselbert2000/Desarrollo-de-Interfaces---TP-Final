@@ -61,6 +61,7 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var keepSession by remember { mutableStateOf(false) }
+    var showRecovery by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -93,157 +94,185 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
         }
     }
 
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { data ->
-                Snackbar(
-                    snackbarData = data,
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                )
-            }
-        },
-    ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.unlam_universidad_nacional_de_la_matanza_logo),
-                contentDescription = "Logo UNLaM",
+    if (showRecovery) {
+        PasswordRecoveryScreen(
+            onBackClick = { showRecovery = false },
+        )
+    } else {
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState) { data ->
+                    Snackbar(
+                        snackbarData = data,
+                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                        contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                    )
+                }
+            },
+        ) { innerPadding ->
+            Column(
                 modifier =
                     Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape),
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "UNLaM",
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-
-            Text(
-                text = "Materias Interactivas en Línea",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                Column(
+                Image(
+                    painter = painterResource(R.drawable.unlam_universidad_nacional_de_la_matanza_logo),
+                    contentDescription = "Logo UNLaM",
                     modifier =
                         Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape),
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "UNLaM",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                Text(
+                    text = "Materias Interactivas en Línea",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+
+                Spacer(modifier = Modifier.height(36.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                 ) {
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Correo electrónico") },
-                        leadingIcon = {
-                            Icon(Icons.Default.Email, contentDescription = null)
-                        },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(14.dp),
-                        textStyle = MaterialTheme.typography.bodyMedium,
-                        colors =
-                            OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                            ),
-                    )
-
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Contraseña") },
-                        leadingIcon = {
-                            Icon(Icons.Default.Lock, contentDescription = null)
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                                Icon(
-                                    imageVector = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                    contentDescription = if (passwordVisible) "Ocultar" else "Mostrar",
-                                )
-                            }
-                        },
-                        singleLine = true,
-                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(14.dp),
-                        textStyle = MaterialTheme.typography.bodyMedium,
-                        colors =
-                            OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                            ),
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Checkbox(
-                            checked = keepSession,
-                            onCheckedChange = { keepSession = it },
-                            colors =
-                                CheckboxDefaults.colors(
-                                    checkedColor = MaterialTheme.colorScheme.primary,
-                                ),
-                        )
-                        Text(
-                            text = "Mantener sesión iniciada",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-
-                    Button(
-                        onClick = { validateAndLogin() },
+                    Column(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .height(52.dp),
-                        shape = RoundedCornerShape(14.dp),
-                        colors =
-                            ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                            ),
+                                .padding(24.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        Text(
-                            text = "Iniciar sesión",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            label = { Text("Correo electrónico") },
+                            leadingIcon = {
+                                Icon(Icons.Default.Email, contentDescription = null)
+                            },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(14.dp),
+                            textStyle = MaterialTheme.typography.bodyMedium,
+                            colors =
+                                OutlinedTextFieldDefaults.colors(
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                                ),
                         )
+
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            label = { Text("Contraseña") },
+                            leadingIcon = {
+                                Icon(Icons.Default.Lock, contentDescription = null)
+                            },
+                            trailingIcon = {
+                                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                                    Icon(
+                                        imageVector = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                        contentDescription = if (passwordVisible) "Ocultar" else "Mostrar",
+                                    )
+                                }
+                            },
+                            singleLine = true,
+                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(14.dp),
+                            textStyle = MaterialTheme.typography.bodyMedium,
+                            colors =
+                                OutlinedTextFieldDefaults.colors(
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                                ),
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Checkbox(
+                                checked = keepSession,
+                                onCheckedChange = { keepSession = it },
+                                colors =
+                                    CheckboxDefaults.colors(
+                                        checkedColor = MaterialTheme.colorScheme.primary,
+                                    ),
+                            )
+                            Text(
+                                text = "Mantener sesión iniciada",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
+
+                        Button(
+                            onClick = { validateAndLogin() },
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(52.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                ),
+                        ) {
+                            Text(
+                                text = "Iniciar sesión",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "¿Olvidaste tu contraseña?",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { showRecovery = true },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary,
+                        ),
+                ) {
+                    Text(
+                        text = "Restablecer contraseña",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "¿Olvidaste tu contraseña?",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-            )
         }
     }
 }
