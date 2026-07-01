@@ -30,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -65,7 +64,6 @@ fun PracticeFilterScreen(
     onBackClick: () -> Unit = {},
     onPracticeClick: (Practice) -> Unit = {},
 ) {
-    var selectedPractice by remember { mutableStateOf<Practice?>(null) }
     var selectedFilter by remember { mutableIntStateOf(if (initialFilter == PracticeStatus.PENDIENTE) 0 else 1) }
     val filters =
         listOf(
@@ -80,19 +78,11 @@ fun PracticeFilterScreen(
     val filterGroups =
         listOf(
             "Pendientes" to listOf(PracticeStatus.PENDIENTE, PracticeStatus.ENTREGADA),
-            "Corregidas" to listOf(PracticeStatus.CORREGIDA, PracticeStatus.ACEPTADA),
-            "Revisión" to listOf(PracticeStatus.SOLICITADA, PracticeStatus.RECHAZADA, PracticeStatus.REVISION),
+            "Corregidas" to listOf(PracticeStatus.CORREGIDA),
+            "Revisión" to listOf(PracticeStatus.SOLICITADA, PracticeStatus.ACEPTADA, PracticeStatus.RECHAZADA, PracticeStatus.REVISION),
         )
     val filteredPractices = practices.filter { it.status in filterGroups[selectedFilter].second }
     val counts = filterGroups.map { (_, statuses) -> practices.count { it.status in statuses } }
-
-    selectedPractice?.let { practice ->
-        PracticeStatusScreen(
-            practice = practice,
-            onBackClick = { selectedPractice = null },
-        )
-        return
-    }
 
     Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
         Row(
@@ -150,8 +140,8 @@ fun PracticeFilterScreen(
                 items(filteredPractices, key = { it.name }) { practice ->
                     PracticeCard(
                         practice = practice,
-                        onSubmitClick = { selectedPractice = practice },
-                        onViewStatusClick = { selectedPractice = practice },
+                        onSubmitClick = { onPracticeClick(practice) },
+                        onViewStatusClick = { onPracticeClick(practice) },
                     )
                 }
             }

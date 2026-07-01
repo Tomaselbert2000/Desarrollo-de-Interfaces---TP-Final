@@ -4,122 +4,54 @@ import com.example.dditpgrupal.data.enums.PracticeStatus
 
 val dummyPracticeList =
     listOf(
-        Practice(
-            "Dise\u00f1o de formulario b\u00e1sico",
-            PracticeStatus.PENDIENTE,
-            false,
-            listOf(
-                "Tomas Gabriel Elbert",
-            ),
-        ),
-        Practice(
-            "Trabajo Pr\u00e1ctico - Unidad 1",
-            PracticeStatus.ENTREGADA,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-            ),
-        ),
+        Practice("Diseño de formulario básico", PracticeStatus.PENDIENTE),
+        Practice("Trabajo Práctico - Unidad 1", PracticeStatus.ENTREGADA),
         Practice(
             "Actividad en clase - Unidad 2",
             PracticeStatus.CORREGIDA,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-            ),
+            grade = 8,
+            madeInGroup = true,
+            groupMembers = listOf("Tomas Gabriel Elbert", "Maximo Assad", "Rodrigo Roldan", "Camila Suárez"),
         ),
+        Practice("Prueba escrita", PracticeStatus.PENDIENTE),
+        Practice("Actividad en clase - Unidad 3", PracticeStatus.PENDIENTE),
         Practice(
-            "Prueba escrita",
-            PracticeStatus.REVISION,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-            ),
+            "TP Integrador - Parte 1",
+            PracticeStatus.SOLICITADA,
             grade = 6,
-            reviewResponse = "El desarrollo es correcto pero faltan algunos fundamentos te\u00f3ricos. Revisar los apuntes de la unidad 2 y corregir las secciones se\u00f1aladas.",
-            revisionDate = "15/07/2026",
+            reviewReason = "No estoy de acuerdo con la corrección, mi solución cumple con todos los requisitos planteados en la rúbrica.",
         ),
         Practice(
-            "Actividad en clase - Unidad 3",
-            PracticeStatus.PENDIENTE,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-            ),
-        ),
-        Practice(
-            "Trabajo pr\u00e1ctico individual",
-            PracticeStatus.CORREGIDA,
-            false,
-            listOf(
-                "Tomas Gabriel Elbert",
-            ),
-        ),
-        Practice(
-            "Ejercicios de l\u00f3gica proposicional",
-            PracticeStatus.CORREGIDA,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-                "Camila Su\u00e1rez",
-            ),
-        ),
-        Practice(
-            "Desarrollo de API REST",
-            PracticeStatus.ENTREGADA,
-            false,
-            listOf(
-                "Tomas Gabriel Elbert",
-            ),
-        ),
-        Practice(
-            "Integraci\u00f3n con base de datos",
-            PracticeStatus.REVISION,
-            true,
-            listOf(
-                "Tomas Gabriel Elbert",
-                "Maximo Assad",
-                @Suppress("ktlint:standard:max-line-length")
-                "Rodrigo Roldan",
-            ),
+            "Ejercicio de estructuras",
+            PracticeStatus.ACEPTADA,
             grade = 5,
-            reviewReason = "La conexi\u00f3n con la base de datos no funciona correctamente en el entorno de prueba. Revisar la configuraci\u00f3n de los controladores.",
-            reviewResponse = "Corregir el archivo de configuraci\u00f3n y asegurarse de que las dependencias est\u00e9n actualizadas. La pr\u00f3xima entrega tiene fecha l\u00edmite el 20/07.",
-            revisionDate = "20/07/2026",
+            newGrade = 8,
+            reviewResponse = "Tiene razón, se re-evaluó la entrega. La solución era correcta. Nueva nota: 8.",
         ),
         Practice(
-            "Prueba de integraci\u00f3n continua",
-            PracticeStatus.PENDIENTE,
-            false,
-            listOf(
-                "Tomas Gabriel Elbert",
-            ),
+            "Trabajo práctico grupal",
+            PracticeStatus.RECHAZADA,
+            grade = 7,
+            reviewResponse = @Suppress("ktlint:standard:max-line-length")
+            "La corrección se realizó correctamente según la rúbrica. No se encontraron errores en la evaluación. Nota final: 7.",
+        ),
+        Practice(
+            "Ejercicio de integración",
+            PracticeStatus.RECHAZADA,
+            grade = 6,
+            reviewResponse = @Suppress("ktlint:standard:max-line-length")
+            "La solución presentada no cumple con los requisitos mínimos de la consigna. Se rechaza la solicitud de revisión. Nota final: 6.",
         ),
     )
 
 data class Practice(
     val name: String,
     val status: PracticeStatus,
-    val madeInGroup: Boolean,
-    val groupMembers: List<String> = listOf(),
     val grade: Int? = null,
     val newGrade: Int? = null,
     val reviewReason: String? = null,
     val reviewResponse: String? = null,
     val revisionDate: String? = null,
+    val madeInGroup: Boolean = false,
+    val groupMembers: List<String> = listOf(),
 )

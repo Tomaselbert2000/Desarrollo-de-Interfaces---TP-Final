@@ -154,7 +154,12 @@ fun CourseMenu(
             }
 
             2 -> {
-                PracticeFilterScreen {  }
+                PracticeFilterScreen(
+                    onPracticeClick = { practice ->
+                        selectedPractice = practice
+                        currentScreen = ScreenView.VER_ESTADO_PRACTICA
+                    },
+                )
             }
 
             3 -> {
