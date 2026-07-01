@@ -56,7 +56,7 @@ fun MessageCard(
             Box(
                 modifier =
                     Modifier
-                        .size(44.dp)
+                        .size(40.dp)
                         .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
@@ -67,7 +67,7 @@ fun MessageCard(
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             }
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -109,7 +109,7 @@ fun MessageCard(
                 Box(
                     modifier =
                         Modifier
-                            .size(10.dp)
+                            .size(8.dp)
                             .background(MaterialTheme.colorScheme.primary, CircleShape),
                 )
             }

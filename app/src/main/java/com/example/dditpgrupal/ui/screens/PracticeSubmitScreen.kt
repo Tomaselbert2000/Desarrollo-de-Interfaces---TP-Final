@@ -99,8 +99,8 @@ fun PracticeSubmitScreen(
 
         Card(
             modifier = Modifier.fillMaxWidth().weight(1f),
-            shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
@@ -117,7 +117,7 @@ fun PracticeSubmitScreen(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp),
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "Destinatario",
                         style = MaterialTheme.typography.labelLarge,
@@ -302,8 +302,8 @@ fun PracticeSubmitScreen(
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "Enviar",
+                                style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onPrimary,
-                                fontWeight = FontWeight.Medium,
                             )
                         }
                     }

@@ -48,7 +48,7 @@ fun ClassModuleCard(
                     Modifier
                         .fillMaxWidth()
                         .clickable { onToggle() }
-                        .padding(horizontal = 16.dp, vertical = 14.dp),
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -74,7 +74,7 @@ fun ClassModuleCard(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     module.content.forEach { material ->

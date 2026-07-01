@@ -84,7 +84,7 @@ fun NewsDetailScreen(
                         Modifier
                             .background(
                                 MaterialTheme.colorScheme.primaryContainer,
-                                RoundedCornerShape(4.dp),
+                                RoundedCornerShape(8.dp),
                             ).padding(horizontal = 8.dp, vertical = 4.dp),
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -95,7 +95,7 @@ fun NewsDetailScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = news.title,

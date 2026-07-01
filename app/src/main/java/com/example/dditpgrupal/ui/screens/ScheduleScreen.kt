@@ -80,7 +80,7 @@ fun ScheduleScreen(course: Course) {
                 text = "Fechas",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(start = 12.dp),
+                modifier = Modifier.padding(start = 8.dp),
             )
             Spacer(modifier = Modifier.weight(1f))
             IconButton(onClick = {
@@ -149,7 +149,7 @@ fun ScheduleScreen(course: Course) {
                                 text = activityName,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = pastAlpha),
-                                modifier = Modifier.padding(start = 12.dp, end = 8.dp),
+                                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
                             )
                             Spacer(modifier = Modifier.weight(1f))
                             Text(
@@ -171,8 +171,8 @@ fun ScheduleScreen(course: Course) {
 
                         if (isExpanded) {
                             Column(
-                                modifier = Modifier.padding(start = 36.dp, top = 8.dp, bottom = 8.dp),
-                                verticalArrangement = Arrangement.spacedBy(6.dp),
+                                modifier = Modifier.padding(start = 32.dp, top = 8.dp, bottom = 8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 topics.forEach { topic ->
                                     Text(

@@ -287,8 +287,8 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Enviar",
+                                    style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.onPrimary,
-                                    fontWeight = FontWeight.Medium,
                                 )
                             }
                         }

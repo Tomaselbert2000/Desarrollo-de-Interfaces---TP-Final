@@ -82,7 +82,7 @@ fun HomeScreen(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
             ) {
                 Row(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -157,7 +157,7 @@ fun HomeScreen(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     if (upcomingDates.isEmpty()) {
                         Text(
                             text = "No hay fechas pr\u00f3ximas",
@@ -167,7 +167,7 @@ fun HomeScreen(
                     } else {
                         upcomingDates.take(5).forEachIndexed { index, (courseName, date) ->
                             Row(
-                                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
@@ -176,7 +176,7 @@ fun HomeScreen(
                                     tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(20.dp),
                                 )
-                                Spacer(modifier = Modifier.width(12.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
                                         text = courseName,
@@ -193,7 +193,7 @@ fun HomeScreen(
                             }
                             if (index < upcomingDates.size - 1 && index < 4) {
                                 HorizontalDivider(
-                                    modifier = Modifier.padding(vertical = 4.dp),
+                                    modifier = Modifier.padding(vertical = 8.dp),
                                     color = MaterialTheme.colorScheme.outline,
                                 )
                             }

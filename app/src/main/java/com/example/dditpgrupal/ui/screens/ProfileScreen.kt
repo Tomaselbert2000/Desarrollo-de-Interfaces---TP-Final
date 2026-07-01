@@ -82,9 +82,9 @@ fun ProfileScreen(
                     Box(
                         modifier =
                             Modifier
-                                .size(108.dp)
+                                .size(104.dp)
                                 .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-                                .border(3.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f), CircleShape),
+                                .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
@@ -165,7 +165,7 @@ fun ProfileScreen(
                         )
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f))
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(

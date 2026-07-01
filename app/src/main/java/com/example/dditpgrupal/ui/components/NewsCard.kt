@@ -54,7 +54,7 @@ fun NewsCard(
                         Modifier
                             .background(
                                 MaterialTheme.colorScheme.primaryContainer,
-                                RoundedCornerShape(4.dp),
+                                RoundedCornerShape(8.dp),
                             ).padding(horizontal = 8.dp, vertical = 4.dp),
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -65,7 +65,7 @@ fun NewsCard(
                 )
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = news.title,
@@ -74,7 +74,7 @@ fun NewsCard(
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = news.subtitle,
@@ -92,7 +92,7 @@ fun NewsCard(
                 overflow = TextOverflow.Ellipsis,
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),

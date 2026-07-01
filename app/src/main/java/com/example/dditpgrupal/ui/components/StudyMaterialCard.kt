@@ -53,7 +53,7 @@ fun StudyMaterialCard(
                 modifier = Modifier.size(24.dp),
             )
 
-            Column(modifier = Modifier.weight(1f).padding(start = 12.dp)) {
+            Column(modifier = Modifier.weight(1f).padding(start = 8.dp)) {
                 Text(
                     text = material.name,
                     style = MaterialTheme.typography.bodyLarge,

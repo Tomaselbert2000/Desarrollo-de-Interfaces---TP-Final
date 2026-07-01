@@ -170,7 +170,7 @@ private fun InfoRow(
             modifier = Modifier.size(32.dp),
         )
         Column(
-            modifier = Modifier.padding(start = 12.dp),
+            modifier = Modifier.padding(start = 8.dp),
         ) {
             Text(
                 text = label,

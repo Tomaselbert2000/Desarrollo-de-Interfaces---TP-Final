@@ -191,8 +191,8 @@ fun NotepadScreen(
                         Modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalItemSpacing = 12.dp,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalItemSpacing = 8.dp,
                 ) {
                     items(filteredNotes, key = { it.name + it.creationDate }) { note ->
                         NoteCard(
