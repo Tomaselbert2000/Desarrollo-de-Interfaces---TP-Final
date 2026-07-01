@@ -36,7 +36,7 @@ val dummyPracticeList =
         ),
         Practice(
             "Prueba escrita",
-            PracticeStatus.PENDIENTE,
+            PracticeStatus.REVISION,
             true,
             listOf(
                 "Tomas Gabriel Elbert",
@@ -44,6 +44,9 @@ val dummyPracticeList =
                 @Suppress("ktlint:standard:max-line-length")
                 "Rodrigo Roldan",
             ),
+            grade = 6,
+            reviewResponse = "El desarrollo es correcto pero faltan algunos fundamentos te\u00f3ricos. Revisar los apuntes de la unidad 2 y corregir las secciones se\u00f1aladas.",
+            revisionDate = "15/07/2026",
         ),
         Practice(
             "Actividad en clase - Unidad 3",
@@ -86,7 +89,7 @@ val dummyPracticeList =
         ),
         Practice(
             "Integraci\u00f3n con base de datos",
-            PracticeStatus.PENDIENTE,
+            PracticeStatus.REVISION,
             true,
             listOf(
                 "Tomas Gabriel Elbert",
@@ -94,6 +97,10 @@ val dummyPracticeList =
                 @Suppress("ktlint:standard:max-line-length")
                 "Rodrigo Roldan",
             ),
+            grade = 5,
+            reviewReason = "La conexi\u00f3n con la base de datos no funciona correctamente en el entorno de prueba. Revisar la configuraci\u00f3n de los controladores.",
+            reviewResponse = "Corregir el archivo de configuraci\u00f3n y asegurarse de que las dependencias est\u00e9n actualizadas. La pr\u00f3xima entrega tiene fecha l\u00edmite el 20/07.",
+            revisionDate = "20/07/2026",
         ),
         Practice(
             "Prueba de integraci\u00f3n continua",
@@ -110,4 +117,9 @@ data class Practice(
     val status: PracticeStatus,
     val madeInGroup: Boolean,
     val groupMembers: List<String> = listOf(),
+    val grade: Int? = null,
+    val newGrade: Int? = null,
+    val reviewReason: String? = null,
+    val reviewResponse: String? = null,
+    val revisionDate: String? = null,
 )

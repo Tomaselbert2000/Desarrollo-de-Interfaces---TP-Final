@@ -35,7 +35,7 @@ import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.ui.screens.ClassModuleListScreen
 import com.example.dditpgrupal.ui.screens.NoteCreationScreen
 import com.example.dditpgrupal.ui.screens.NotepadScreen
-import com.example.dditpgrupal.ui.screens.PracticeListScreen
+import com.example.dditpgrupal.ui.screens.PracticeFilterScreen
 import com.example.dditpgrupal.ui.screens.PracticeStatusScreen
 import com.example.dditpgrupal.ui.screens.PracticeSubmitScreen
 import com.example.dditpgrupal.ui.screens.ScheduleScreen
@@ -69,7 +69,7 @@ fun CourseMenu(
     if (currentScreen == ScreenView.ENVIAR_PRACTICA) {
         PracticeSubmitScreen(
             onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
-            onSaveDraft = { _ -> },
+            onSaveDraft = { _ -> currentScreen = ScreenView.MENU_PRINCIPAL },
             onSend = { _, _ -> currentScreen = ScreenView.MENU_PRINCIPAL },
         )
         return
@@ -78,8 +78,8 @@ fun CourseMenu(
     if (currentScreen == ScreenView.CREAR_NOTA) {
         NoteCreationScreen(
             onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
-            onSave = { text, isImportant ->
-                notes.add(Note(text, text, isImportant, java.time.LocalDate.now()))
+            onSave = { name, text, isImportant ->
+                notes.add(Note(name, text, isImportant, java.time.LocalDate.now()))
                 currentScreen = ScreenView.MENU_PRINCIPAL
             },
         )
@@ -154,16 +154,7 @@ fun CourseMenu(
             }
 
             2 -> {
-                PracticeListScreen(
-                    onPracticeSubmit = { practice ->
-                        selectedPractice = practice
-                        currentScreen = ScreenView.ENVIAR_PRACTICA
-                    },
-                    onPracticeViewStatus = { practice ->
-                        selectedPractice = practice
-                        currentScreen = ScreenView.VER_ESTADO_PRACTICA
-                    },
-                )
+                PracticeFilterScreen {  }
             }
 
             3 -> {

@@ -35,8 +35,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun NoteCreationScreen(
     onBackClick: () -> Unit = {},
-    onSave: (text: String, isImportant: Boolean) -> Unit = { _, _ -> },
+    onSave: (name: String, text: String, isImportant: Boolean) -> Unit = { _, _, _ -> },
 ) {
+    var noteName by remember { mutableStateOf("") }
     var noteText by remember { mutableStateOf("") }
     var isImportant by remember { mutableStateOf(false) }
 
@@ -82,6 +83,20 @@ fun NoteCreationScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 OutlinedTextField(
+                    value = noteName,
+                    onValueChange = { noteName = it },
+                    placeholder = {
+                        Text(
+                            text = "Título de la nota",
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    singleLine = true,
+                )
+
+                OutlinedTextField(
                     value = noteText,
                     onValueChange = { noteText = it },
                     placeholder = {
@@ -114,7 +129,7 @@ fun NoteCreationScreen(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    IconButton(onClick = { onSave(noteText, isImportant) }) {
+                    IconButton(onClick = { onSave(noteName, noteText, isImportant) }) {
                         Icon(
                             imageVector = Icons.Default.Save,
                             contentDescription = "Guardar nota",

@@ -8,8 +8,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.AddTask
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +37,10 @@ private fun PracticeStatus.icon(): ImageVector =
         PracticeStatus.PENDIENTE -> Icons.Default.Schedule
         PracticeStatus.ENTREGADA -> Icons.AutoMirrored.Filled.Assignment
         PracticeStatus.CORREGIDA -> Icons.Default.CheckCircle
+        PracticeStatus.SOLICITADA -> Icons.Default.AddTask
+        PracticeStatus.ACEPTADA -> Icons.Default.Star
+        PracticeStatus.RECHAZADA -> Icons.Default.Cancel
+        PracticeStatus.REVISION -> Icons.Default.Reviews
     }
 
 @Composable
@@ -41,6 +49,10 @@ private fun PracticeStatus.statusColor(): Color =
         PracticeStatus.PENDIENTE -> MaterialTheme.colorScheme.error
         PracticeStatus.ENTREGADA -> MaterialTheme.colorScheme.primary
         PracticeStatus.CORREGIDA -> MaterialTheme.colorScheme.tertiary
+        PracticeStatus.SOLICITADA -> MaterialTheme.colorScheme.tertiary
+        PracticeStatus.ACEPTADA -> MaterialTheme.colorScheme.primary
+        PracticeStatus.RECHAZADA -> MaterialTheme.colorScheme.error
+        PracticeStatus.REVISION -> MaterialTheme.colorScheme.secondary
     }
 
 @Suppress("ktlint:standard:function-naming")
