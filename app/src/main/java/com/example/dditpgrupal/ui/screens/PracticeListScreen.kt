@@ -30,7 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,8 +63,12 @@ fun PracticeFilterScreen(
     practices: List<Practice> = dummyPracticeList,
     onBackClick: () -> Unit = {},
     onPracticeClick: (Practice) -> Unit = {},
+    selectedFilter: Int = if (initialFilter == PracticeStatus.PENDIENTE) 0 else 1,
+    onFilterChanged: ((Int) -> Unit)? = null,
 ) {
-    var selectedFilter by remember { mutableIntStateOf(if (initialFilter == PracticeStatus.PENDIENTE) 0 else 1) }
+    var internalFilter by rememberSaveable { mutableIntStateOf(selectedFilter) }
+    val currentFilter = onFilterChanged?.let { selectedFilter } ?: internalFilter
+    val onSelect: (Int) -> Unit = onFilterChanged ?: { index -> internalFilter = index }
     val filters =
         listOf(
             PracticeStatus.PENDIENTE,
@@ -81,7 +85,7 @@ fun PracticeFilterScreen(
             "Corregidas" to listOf(PracticeStatus.CORREGIDA),
             "Revisión" to listOf(PracticeStatus.SOLICITADA, PracticeStatus.ACEPTADA, PracticeStatus.RECHAZADA, PracticeStatus.REVISION),
         )
-    val filteredPractices = practices.filter { it.status in filterGroups[selectedFilter].second }
+    val filteredPractices = practices.filter { it.status in filterGroups[currentFilter].second }
     val counts = filterGroups.map { (_, statuses) -> practices.count { it.status in statuses } }
 
     Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
@@ -97,8 +101,8 @@ fun PracticeFilterScreen(
                     icon = filterGroups[index].second.first().icon,
                     title = title,
                     count = counts[index],
-                    isSelected = selectedFilter == index,
-                    onClick = { selectedFilter = index },
+                    isSelected = currentFilter == index,
+                    onClick = { onSelect(index) },
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -113,7 +117,7 @@ fun PracticeFilterScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
-                    imageVector = filterGroups[selectedFilter].second.first().icon,
+                    imageVector = filterGroups[currentFilter].second.first().icon,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                     modifier = Modifier.size(64.dp),
@@ -121,7 +125,7 @@ fun PracticeFilterScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text =
-                        when (selectedFilter) {
+                        when (currentFilter) {
                             0 -> "No hay prácticas pendientes"
                             1 -> "No hay prácticas corregidas"
                             else -> "No hay prácticas en revisión"
