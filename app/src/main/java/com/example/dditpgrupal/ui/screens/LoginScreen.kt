@@ -236,7 +236,6 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
                             Text(
                                 text = "Iniciar sesión",
                                 style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold,
                             )
                         }
                     }
@@ -269,7 +268,6 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
                     Text(
                         text = "Restablecer contraseña",
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }

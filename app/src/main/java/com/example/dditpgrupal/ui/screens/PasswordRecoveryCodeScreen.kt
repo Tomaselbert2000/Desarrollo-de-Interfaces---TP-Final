@@ -172,7 +172,6 @@ fun PasswordRecoveryCodeScreen(
                 Text(
                     text = "Enviar c\u00f3digo",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
                 )
             }
         }

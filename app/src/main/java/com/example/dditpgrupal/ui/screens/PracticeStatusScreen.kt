@@ -94,9 +94,9 @@ fun PracticeStatusScreen(
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(start = 8.dp),
             )
-
-            Spacer(modifier = Modifier.weight(1f))
         }
+
+        Spacer(modifier = Modifier.weight(1f))
 
         when (practice.status) {
             PracticeStatus.PENDIENTE -> {
@@ -124,7 +124,6 @@ fun PracticeStatusScreen(
                         Text(
                             text = "Enviar pr\u00e1ctica",
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
                         )
                     }
                 }
@@ -151,7 +150,6 @@ fun PracticeStatusScreen(
                     Text(
                         text = practice.name,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
 
@@ -271,22 +269,7 @@ private fun StatusBadge(status: PracticeStatus) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
             color = textColor,
-        )
-    }
-
-    Box(
-        modifier =
-            Modifier
-                .background(bgColor, RoundedCornerShape(8.dp))
-                .padding(horizontal = 12.dp, vertical = 6.dp),
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }
@@ -507,7 +490,6 @@ private fun CorrectedContent(
                 Text(
                     text = "Solicitar revisión",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
@@ -836,7 +818,6 @@ private fun RevisionContent(practice: Practice) {
                     Text(
                         text = practice.revisionDate,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 }

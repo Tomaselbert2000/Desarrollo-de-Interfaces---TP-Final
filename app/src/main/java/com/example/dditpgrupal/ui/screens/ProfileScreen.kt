@@ -160,7 +160,6 @@ fun ProfileScreen(
                         Text(
                             text = "Datos personales",
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                     }
