@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,13 +36,14 @@ fun ClassModuleCard(
     module: ClassModule,
     isExpanded: Boolean = false,
     onToggle: () -> Unit = {},
+    onDownloadClick: () -> Unit = {},
 ) {
     Card(
         modifier =
             Modifier
                 .fillMaxWidth()
                 .animateContentSize(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Column {
@@ -61,6 +65,18 @@ fun ClassModuleCard(
                     modifier = Modifier.weight(1f),
                 )
 
+                IconButton(
+                    onClick = onDownloadClick,
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Download,
+                        contentDescription = "Descargar todo",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp),
+                    )
+                }
+
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = if (isExpanded) "Contraer" else "Expandir",
@@ -74,7 +90,7 @@ fun ClassModuleCard(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     module.content.forEach { material ->

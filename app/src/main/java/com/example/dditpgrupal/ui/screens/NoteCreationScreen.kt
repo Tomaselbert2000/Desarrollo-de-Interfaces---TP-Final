@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Note
+import com.example.dditpgrupal.ui.components.TextFormatToolbar
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -73,7 +75,7 @@ fun NoteCreationScreen(
         Card(
             modifier =
                 Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(top = 16.dp),
             shape = RoundedCornerShape(12.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -89,7 +91,7 @@ fun NoteCreationScreen(
                     onValueChange = { noteName = it },
                     placeholder = {
                         Text(
-                            text = "Título de la nota",
+                            text = "T\u00edtulo de la nota",
                             style = MaterialTheme.typography.bodyLarge,
                         )
                     },
@@ -103,14 +105,14 @@ fun NoteCreationScreen(
                     onValueChange = { noteText = it },
                     placeholder = {
                         Text(
-                            text = "¿Qué estás pensando?",
+                            text = "",
                             style = MaterialTheme.typography.bodyLarge,
                         )
                     },
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .weight(1f),
+                            .heightIn(min = 200.dp),
                     textStyle = MaterialTheme.typography.bodyLarge,
                 )
 
@@ -139,6 +141,8 @@ fun NoteCreationScreen(
                         )
                     }
                 }
+
+                TextFormatToolbar()
             }
         }
     }

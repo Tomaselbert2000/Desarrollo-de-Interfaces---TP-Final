@@ -65,6 +65,7 @@ fun CourseMenu(
         PracticeStatusScreen(
             practice = selectedPractice!!,
             onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
+            onSendPractice = { currentScreen = ScreenView.ENVIAR_PRACTICA },
         )
         return
     }

@@ -18,17 +18,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.FormatListBulleted
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.automirrored.filled.Subject
 import androidx.compose.material.icons.filled.AttachFile
-import androidx.compose.material.icons.filled.FormatBold
-import androidx.compose.material.icons.filled.FormatItalic
-import androidx.compose.material.icons.filled.FormatQuote
-import androidx.compose.material.icons.filled.FormatUnderlined
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.SmartButton
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -39,7 +33,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -55,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dditpgrupal.ui.components.TextFormatToolbar
 
 private const val MAX_CHARS = 500
 
@@ -296,69 +290,7 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                 }
             }
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-            ) {
-                Column(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = "Herramientas de texto",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            fontWeight = FontWeight.Medium,
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-                            text = "6 herramientas",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        listOf(
-                            Icons.Default.FormatBold to "Negrita",
-                            Icons.Default.FormatItalic to "Cursiva",
-                            Icons.Default.FormatUnderlined to "Subrayado",
-                            Icons.AutoMirrored.Filled.FormatListBulleted to "Lista",
-                            Icons.Default.FormatQuote to "Cita",
-                            Icons.Default.SmartButton to "Botón",
-                        ).forEach { (icon, desc) ->
-                            IconButton(
-                                onClick = { },
-                                colors =
-                                    IconButtonDefaults.iconButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.surface,
-                                    ),
-                                modifier = Modifier.size(40.dp),
-                            ) {
-                                Icon(
-                                    imageVector = icon,
-                                    contentDescription = desc,
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.size(20.dp),
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+            TextFormatToolbar()
         }
     }
 }

@@ -32,6 +32,8 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -61,6 +63,7 @@ import com.example.dditpgrupal.data.enums.PracticeStatus
 fun PracticeStatusScreen(
     practice: Practice,
     onBackClick: () -> Unit = {},
+    onSendPractice: () -> Unit = {},
     onReviewRequested: (reason: String) -> Unit = {},
 ) {
     var showReviewDialog by remember { mutableStateOf(false) }
@@ -97,11 +100,33 @@ fun PracticeStatusScreen(
 
         when (practice.status) {
             PracticeStatus.PENDIENTE -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    PendingContent()
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        PendingContent()
+                    }
+
+                    Button(
+                        onClick = onSendPractice,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors =
+                            ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary,
+                            ),
+                    ) {
+                        Text(
+                            text = "Enviar pr\u00e1ctica",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
                 }
             }
 

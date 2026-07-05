@@ -49,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dditpgrupal.ui.components.TextFormatToolbar
 
 private val teachers = listOf("Heliana Vera", "Gonzalo Rivas", "Liliana Romano", "Federico Pileci")
 private const val MAX_CHARS = 1000
@@ -166,7 +167,7 @@ fun PracticeSubmitScreen(
                             charCount = it.length
                         }
                     },
-                    placeholder = { Text("Escribí tu mensaje...") },
+                    placeholder = { Text("Mensaje opcional al docente") },
                     modifier =
                         Modifier
                             .fillMaxWidth()
@@ -178,6 +179,8 @@ fun PracticeSubmitScreen(
                             unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                         ),
                 )
+
+                TextFormatToolbar()
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),

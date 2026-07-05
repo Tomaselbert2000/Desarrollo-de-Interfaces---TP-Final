@@ -30,12 +30,12 @@ import com.example.dditpgrupal.data.StudyMaterial
 fun StudyMaterialCard(
     material: StudyMaterial,
     onDownloadClick: () -> Unit = {},
-    elevation: Dp = 4.dp,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    elevation: Dp = 0.dp,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         colors = CardDefaults.cardColors(containerColor = containerColor),
     ) {
@@ -43,7 +43,7 @@ fun StudyMaterialCard(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
