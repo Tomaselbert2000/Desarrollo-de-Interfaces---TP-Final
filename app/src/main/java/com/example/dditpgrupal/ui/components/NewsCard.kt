@@ -49,7 +49,7 @@ fun NewsCard(
                 Text(
                     text = news.category,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier =
                         Modifier
                             .background(

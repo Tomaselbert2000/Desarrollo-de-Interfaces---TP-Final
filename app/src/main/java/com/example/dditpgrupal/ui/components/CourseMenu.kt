@@ -58,6 +58,7 @@ fun CourseMenu(
     var currentScreen by remember { mutableStateOf(ScreenView.MENU_PRINCIPAL) }
     var selectedPractice by remember { mutableStateOf<Practice?>(null) }
     var practiceFilterIndex by rememberSaveable { mutableIntStateOf(0) }
+    var noteToEdit by remember { mutableStateOf<Note?>(null) }
     val notes = remember { mutableStateListOf<Note>().also { it.addAll(course.courseNotes) } }
 
     if (currentScreen == ScreenView.VER_ESTADO_PRACTICA && selectedPractice != null) {
@@ -79,9 +80,21 @@ fun CourseMenu(
 
     if (currentScreen == ScreenView.CREAR_NOTA) {
         NoteCreationScreen(
-            onBackClick = { currentScreen = ScreenView.MENU_PRINCIPAL },
+            noteToEdit = noteToEdit,
+            onBackClick = {
+                noteToEdit = null
+                currentScreen = ScreenView.MENU_PRINCIPAL
+            },
             onSave = { name, text, isImportant ->
-                notes.add(Note(name, text, isImportant, java.time.LocalDate.now()))
+                if (noteToEdit != null) {
+                    val index = notes.indexOf(noteToEdit)
+                    if (index != -1) {
+                        notes[index] = Note(name, text, isImportant, noteToEdit!!.creationDate)
+                    }
+                } else {
+                    notes.add(Note(name, text, isImportant, java.time.LocalDate.now()))
+                }
+                noteToEdit = null
                 currentScreen = ScreenView.MENU_PRINCIPAL
             },
         )
@@ -170,6 +183,10 @@ fun CourseMenu(
                 NotepadScreen(
                     notes = notes,
                     onAddNote = { currentScreen = ScreenView.CREAR_NOTA },
+                    onEditNote = { note ->
+                        noteToEdit = note
+                        currentScreen = ScreenView.CREAR_NOTA
+                    },
                     onDeleteNote = { note -> notes.remove(note) },
                 )
             }

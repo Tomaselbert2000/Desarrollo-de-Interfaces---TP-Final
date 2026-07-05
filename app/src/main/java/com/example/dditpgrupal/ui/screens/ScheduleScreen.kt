@@ -188,7 +188,7 @@ fun ScheduleScreen(course: Course) {
                     if (index < course.importantDates.lastIndex) {
                         HorizontalDivider(
                             modifier = Modifier.padding(vertical = 4.dp),
-                            color = MaterialTheme.colorScheme.outline,
+                            color = MaterialTheme.colorScheme.outlineVariant,
                         )
                     }
                 }

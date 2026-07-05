@@ -79,7 +79,7 @@ fun NewsDetailScreen(
                 Text(
                     text = news.category,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier =
                         Modifier
                             .background(
@@ -114,7 +114,7 @@ fun NewsDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HorizontalDivider(color = MaterialTheme.colorScheme.outline)
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
             Spacer(modifier = Modifier.height(16.dp))
 

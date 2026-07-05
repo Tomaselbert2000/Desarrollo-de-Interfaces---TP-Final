@@ -173,7 +173,7 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                         }
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -326,7 +326,7 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),

@@ -30,16 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dditpgrupal.data.Note
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NoteCreationScreen(
     onBackClick: () -> Unit = {},
     onSave: (name: String, text: String, isImportant: Boolean) -> Unit = { _, _, _ -> },
+    noteToEdit: Note? = null,
 ) {
-    var noteName by remember { mutableStateOf("") }
-    var noteText by remember { mutableStateOf("") }
-    var isImportant by remember { mutableStateOf(false) }
+    var noteName by remember { mutableStateOf(noteToEdit?.name ?: "") }
+    var noteText by remember { mutableStateOf(noteToEdit?.storedText ?: "") }
+    var isImportant by remember { mutableStateOf(noteToEdit?.isImportant ?: false) }
 
     Column(
         modifier =
@@ -60,7 +62,7 @@ fun NoteCreationScreen(
             }
 
             Text(
-                text = "Crear nota",
+                text = if (noteToEdit != null) "Editar nota" else "Crear nota",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -75,7 +77,7 @@ fun NoteCreationScreen(
                     .padding(top = 16.dp),
             shape = RoundedCornerShape(12.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(

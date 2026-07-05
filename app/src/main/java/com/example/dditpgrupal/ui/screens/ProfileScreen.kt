@@ -165,7 +165,7 @@ fun ProfileScreen(
                         )
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(

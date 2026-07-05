@@ -215,20 +215,25 @@ private fun NoteCard(
     onEditNote: () -> Unit = {},
     onDeleteNote: () -> Unit = {},
 ) {
+    val containerColor =
+        if (note.isImportant) {
+            MaterialTheme.colorScheme.primaryContainer
+        } else {
+            MaterialTheme.colorScheme.tertiaryContainer
+        }
+    val onContainerColor =
+        if (note.isImportant) {
+            MaterialTheme.colorScheme.onPrimaryContainer
+        } else {
+            MaterialTheme.colorScheme.onTertiaryContainer
+        }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        colors =
-            CardDefaults.cardColors(
-                containerColor =
-                    if (note.isImportant) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.tertiaryContainer
-                    },
-            ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -237,7 +242,7 @@ private fun NoteCard(
                 text = note.name,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = onContainerColor,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -245,7 +250,7 @@ private fun NoteCard(
             Text(
                 text = note.storedText,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = onContainerColor.copy(alpha = 0.8f),
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -260,7 +265,7 @@ private fun NoteCard(
                 Text(
                     text = "${note.creationDate.dayOfMonth}/${note.creationDate.monthValue}/${note.creationDate.year}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = onContainerColor.copy(alpha = 0.7f),
                     modifier = Modifier.weight(1f),
                 )
 

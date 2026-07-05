@@ -95,31 +95,65 @@ fun PracticeStatusScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(
-                text = practice.name,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
+        when (practice.status) {
+            PracticeStatus.PENDIENTE -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    PendingContent()
+                }
+            }
 
-            StatusBadge(practice.status)
+            PracticeStatus.ENTREGADA -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    SubmittedContent()
+                }
+            }
 
-            when (practice.status) {
-                PracticeStatus.PENDIENTE -> PendingContent()
-                PracticeStatus.ENTREGADA -> SubmittedContent()
-                PracticeStatus.CORREGIDA -> CorrectedContent(practice, onRequestReview = { showReviewDialog = true })
-                PracticeStatus.SOLICITADA -> ReviewRequestedContent(practice)
-                PracticeStatus.ACEPTADA -> AcceptedContent(practice)
-                PracticeStatus.RECHAZADA -> RejectedContent(practice)
-                PracticeStatus.REVISION -> RevisionContent(practice)
+            else -> {
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Text(
+                        text = practice.name,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+
+                    StatusBadge(practice.status)
+
+                    when (practice.status) {
+                        PracticeStatus.CORREGIDA -> {
+                            CorrectedContent(practice, onRequestReview = { showReviewDialog = true })
+                        }
+
+                        PracticeStatus.SOLICITADA -> {
+                            ReviewRequestedContent(practice)
+                        }
+
+                        PracticeStatus.ACEPTADA -> {
+                            AcceptedContent(practice)
+                        }
+
+                        PracticeStatus.RECHAZADA -> {
+                            RejectedContent(practice)
+                        }
+
+                        PracticeStatus.REVISION -> {
+                            RevisionContent(practice)
+                        }
+                    }
+                }
             }
         }
     }
@@ -144,16 +178,78 @@ fun PracticeStatusScreen(
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun StatusBadge(status: PracticeStatus) {
-    val (bgColor, label) =
+    val (bgColor, textColor, label) =
         when (status) {
-            PracticeStatus.PENDIENTE -> MaterialTheme.colorScheme.errorContainer to "Pendiente"
-            PracticeStatus.ENTREGADA -> MaterialTheme.colorScheme.primaryContainer to "Entregada"
-            PracticeStatus.CORREGIDA -> MaterialTheme.colorScheme.tertiaryContainer to "Corregida"
-            PracticeStatus.SOLICITADA -> MaterialTheme.colorScheme.tertiaryContainer to "Revisión solicitada"
-            PracticeStatus.ACEPTADA -> MaterialTheme.colorScheme.primaryContainer to "Aceptada"
-            PracticeStatus.RECHAZADA -> MaterialTheme.colorScheme.errorContainer to "Rechazada"
-            PracticeStatus.REVISION -> MaterialTheme.colorScheme.secondaryContainer to "Requiere revisión"
+            PracticeStatus.PENDIENTE -> {
+                Triple(
+                    MaterialTheme.colorScheme.errorContainer,
+                    MaterialTheme.colorScheme.onErrorContainer,
+                    "Pendiente",
+                )
+            }
+
+            PracticeStatus.ENTREGADA -> {
+                Triple(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.onPrimaryContainer,
+                    "Entregada",
+                )
+            }
+
+            PracticeStatus.CORREGIDA -> {
+                Triple(
+                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.onTertiaryContainer,
+                    "Corregida",
+                )
+            }
+
+            PracticeStatus.SOLICITADA -> {
+                Triple(
+                    MaterialTheme.colorScheme.tertiaryContainer,
+                    MaterialTheme.colorScheme.onTertiaryContainer,
+                    "Revisi\u00f3n solicitada",
+                )
+            }
+
+            PracticeStatus.ACEPTADA -> {
+                Triple(
+                    MaterialTheme.colorScheme.primaryContainer,
+                    MaterialTheme.colorScheme.onPrimaryContainer,
+                    "Aceptada",
+                )
+            }
+
+            PracticeStatus.RECHAZADA -> {
+                Triple(
+                    MaterialTheme.colorScheme.errorContainer,
+                    MaterialTheme.colorScheme.onErrorContainer,
+                    "Rechazada",
+                )
+            }
+
+            PracticeStatus.REVISION -> {
+                Triple(
+                    MaterialTheme.colorScheme.secondaryContainer,
+                    MaterialTheme.colorScheme.onSecondaryContainer,
+                    "Requiere revisi\u00f3n",
+                )
+            }
         }
+
+    Box(
+        modifier =
+            Modifier
+                .background(bgColor, RoundedCornerShape(8.dp))
+                .padding(horizontal = 12.dp, vertical = 6.dp),
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = textColor,
+        )
+    }
 
     Box(
         modifier =
@@ -173,9 +269,9 @@ private fun StatusBadge(status: PracticeStatus) {
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun PendingContent() {
-    Spacer(modifier = Modifier.height(40.dp))
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
@@ -197,9 +293,9 @@ private fun PendingContent() {
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun SubmittedContent() {
-    Spacer(modifier = Modifier.height(40.dp))
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(

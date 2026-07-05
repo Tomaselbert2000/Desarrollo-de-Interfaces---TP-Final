@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -90,7 +89,7 @@ fun CourseScreen(
                         )
                     } else {
                         Text(
-                            text = "Mis cursos",
+                            text = "Materias",
                             style = MaterialTheme.typography.titleLarge,
                         )
                     }
@@ -102,15 +101,6 @@ fun CourseScreen(
                             contentDescription = if (isSearchActive) "Cerrar búsqueda" else "Buscar",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                    }
-                    if (!isSearchActive) {
-                        IconButton(onClick = { }) {
-                            Icon(
-                                imageVector = Icons.Default.MoreVert,
-                                contentDescription = "Opciones",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
                     }
                 },
                 colors =
@@ -159,9 +149,15 @@ fun CourseScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(filteredCourses.indices.toList(), key = { filteredCourses[it].commission }) { index ->
+                items(
+                    filteredCourses.indices.toList(),
+                    key = { filteredCourses[it].commission },
+                ) { index ->
                     val originalIndex = courseList.indexOf(filteredCourses[index])
-                    CourseCard(course = filteredCourses[index], onClick = { onCourseClick(originalIndex) })
+                    CourseCard(
+                        course = filteredCourses[index],
+                        onClick = { onCourseClick(originalIndex) },
+                    )
                 }
             }
         }

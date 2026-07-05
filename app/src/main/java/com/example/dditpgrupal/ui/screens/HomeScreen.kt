@@ -194,7 +194,7 @@ fun HomeScreen(
                             if (index < upcomingDates.size - 1 && index < 4) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(vertical = 8.dp),
-                                    color = MaterialTheme.colorScheme.outline,
+                                    color = MaterialTheme.colorScheme.outlineVariant,
                                 )
                             }
                         }

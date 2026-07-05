@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.HourglassBottom
@@ -34,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +50,7 @@ private val PracticeStatus.icon: ImageVector
     get() =
         when (this) {
             PracticeStatus.PENDIENTE -> Icons.Default.Schedule
-            PracticeStatus.ENTREGADA -> Icons.Default.Send
+            PracticeStatus.ENTREGADA -> Icons.AutoMirrored.Filled.Send
             PracticeStatus.CORREGIDA -> Icons.Default.CheckCircle
             PracticeStatus.SOLICITADA -> Icons.Default.HourglassBottom
             PracticeStatus.ACEPTADA -> Icons.Default.Star
@@ -173,7 +175,7 @@ private fun FilterButton(
                     if (isSelected) {
                         MaterialTheme.colorScheme.primaryContainer
                     } else {
-                        MaterialTheme.colorScheme.surfaceVariant
+                        Color.Transparent
                     },
             ),
         onClick = onClick,
