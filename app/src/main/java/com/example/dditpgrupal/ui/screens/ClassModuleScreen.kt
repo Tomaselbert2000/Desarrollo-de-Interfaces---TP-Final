@@ -122,7 +122,7 @@ fun ClassModuleListScreen(moduleList: List<ClassModule> = dummyModuleList) {
             Text(
                 text = "M\u00f3dulos de la materia",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onBackground,
             )
 
             Spacer(modifier = Modifier.weight(1f))

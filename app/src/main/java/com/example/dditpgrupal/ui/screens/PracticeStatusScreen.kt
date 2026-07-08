@@ -95,7 +95,7 @@ fun PracticeStatusScreen(
                 text = "Estado de práctica",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(start = 8.dp),
             )
         }

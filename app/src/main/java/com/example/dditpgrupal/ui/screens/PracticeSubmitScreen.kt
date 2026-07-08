@@ -74,6 +74,7 @@ fun PracticeSubmitScreen(
         modifier =
             Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(16.dp),
     ) {
         Row(
@@ -102,7 +103,7 @@ fun PracticeSubmitScreen(
             modifier = Modifier.fillMaxWidth().weight(1f),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         ) {
             Column(
                 modifier =

@@ -234,7 +234,7 @@ fun HomeScreen(
             Text(
                 text = "Noticias",
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(top = 8.dp),
             )
         }

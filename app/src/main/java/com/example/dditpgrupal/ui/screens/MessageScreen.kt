@@ -84,7 +84,7 @@ fun MessageScreen(messages: List<Message> = dummyMessages) {
                     text = "Mensajes",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
             }

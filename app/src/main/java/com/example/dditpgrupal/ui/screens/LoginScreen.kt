@@ -140,7 +140,7 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
                         Modifier
                             .size(100.dp)
                             .clip(CircleShape)
-                            .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape),
+                            .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -149,7 +149,7 @@ fun LoginScreen(onLogin: () -> Unit = {}) {
                     text = "UNLaM",
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
 
                 Text(

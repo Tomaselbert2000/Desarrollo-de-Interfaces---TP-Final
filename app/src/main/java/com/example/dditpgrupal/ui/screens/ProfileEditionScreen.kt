@@ -111,7 +111,7 @@ fun ProfileEditionScreen(
                 text = "Editar perfil",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 
