@@ -101,7 +101,10 @@ fun CourseDetails(course: Course) {
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
-                AbsenceStatisticsPanel(absences = course.absences ?: 0, absenceDates = course.absenceDates)
+                AbsenceStatisticsPanel(
+                    absences = course.absences ?: 0,
+                    absenceDates = course.absenceDates,
+                )
             }
         }
 
@@ -362,7 +365,10 @@ fun CourseDetails(course: Course) {
                             modifier =
                                 Modifier
                                     .size(36.dp)
-                                    .background(course.color.copy(alpha = 0.15f), RoundedCornerShape(10.dp)),
+                                    .background(
+                                        course.color.copy(alpha = 0.15f),
+                                        RoundedCornerShape(10.dp),
+                                    ),
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -504,7 +510,10 @@ fun CourseDetails(course: Course) {
                                 val prevWeek = weeks.getOrNull(weekIndex - 1)
                                 val showMonthLabel =
                                     weekIndex == 0 ||
-                                        firstDate.monthValue != (prevWeek?.first()?.first?.monthValue ?: -1)
+                                        firstDate.monthValue != (
+                                            prevWeek?.first()?.first?.monthValue
+                                                ?: -1
+                                        )
 
                                 Box(
                                     modifier = Modifier.height(20.dp),
@@ -589,7 +598,10 @@ fun CourseDetails(course: Course) {
                                 modifier =
                                     Modifier
                                         .size(12.dp)
-                                        .background(heatmapColor(minutes, course.color), RoundedCornerShape(2.dp)),
+                                        .background(
+                                            heatmapColor(minutes, course.color),
+                                            RoundedCornerShape(2.dp),
+                                        ),
                             )
                             Spacer(Modifier.width(4.dp))
                             Text(

@@ -143,7 +143,10 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                                 label = { Text("Destinatario") },
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                                 shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                                modifier =
+                                    Modifier
+                                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+                                        .fillMaxWidth(),
                                 textStyle = MaterialTheme.typography.bodyMedium,
                                 colors =
                                     OutlinedTextFieldDefaults.colors(
@@ -235,7 +238,10 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                             modifier =
                                 Modifier
                                     .size(40.dp)
-                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(10.dp),
+                                    ),
                         ) {
                             Icon(
                                 imageVector = Icons.Default.AttachFile,
@@ -250,7 +256,10 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                             modifier =
                                 Modifier
                                     .size(40.dp)
-                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(10.dp),
+                                    ),
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Image,
@@ -266,8 +275,10 @@ fun NewMessageScreen(onBackClick: () -> Unit = {}) {
                             modifier =
                                 Modifier
                                     .height(40.dp)
-                                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp))
-                                    .clickable { }
+                                    .background(
+                                        MaterialTheme.colorScheme.primary,
+                                        RoundedCornerShape(12.dp),
+                                    ).clickable { }
                                     .padding(horizontal = 16.dp),
                             contentAlignment = Alignment.Center,
                         ) {

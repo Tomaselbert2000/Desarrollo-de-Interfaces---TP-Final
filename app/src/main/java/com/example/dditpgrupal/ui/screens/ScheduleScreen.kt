@@ -78,7 +78,12 @@ fun ScheduleScreen(course: Course) {
                 "Unidad 2: Conceptos avanzados",
                 "Unidad 3: Pr\u00e1ctica integradora",
             ),
-            listOf("Consigna", "Formato de entrega", "Fecha l\u00edmite", "R\u00fabrica de evaluaci\u00f3n"),
+            listOf(
+                "Consigna",
+                "Formato de entrega",
+                "Fecha l\u00edmite",
+                "R\u00fabrica de evaluaci\u00f3n",
+            ),
             listOf("Temas a recuperar"),
             listOf(
                 "Definici\u00f3n del proyecto",
@@ -253,7 +258,10 @@ private fun CalendarCard(
                             val borderModifier =
                                 if (isHighlighted) {
                                     Modifier.border(
-                                        BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)),
+                                        BorderStroke(
+                                            1.dp,
+                                            MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                                        ),
                                         CircleShape,
                                     )
                                 } else {

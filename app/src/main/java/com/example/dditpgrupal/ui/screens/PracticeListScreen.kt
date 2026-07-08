@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.HourglassBottom
 import androidx.compose.material.icons.filled.RateReview
 import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -85,7 +84,13 @@ fun PracticeFilterScreen(
         listOf(
             "Pendientes" to listOf(PracticeStatus.PENDIENTE, PracticeStatus.ENTREGADA),
             "Corregidas" to listOf(PracticeStatus.CORREGIDA),
-            "Revisión" to listOf(PracticeStatus.SOLICITADA, PracticeStatus.ACEPTADA, PracticeStatus.RECHAZADA, PracticeStatus.REVISION),
+            "Revisión" to
+                listOf(
+                    PracticeStatus.SOLICITADA,
+                    PracticeStatus.ACEPTADA,
+                    PracticeStatus.RECHAZADA,
+                    PracticeStatus.REVISION,
+                ),
         )
     val filteredPractices = practices.filter { it.status in filterGroups[currentFilter].second }
     val counts = filterGroups.map { (_, statuses) -> practices.count { it.status in statuses } }

@@ -116,7 +116,6 @@ fun TextFormatToolbar(
 
 @Preview
 @Composable
-fun ToolBarPreview(){
-
-    TextFormatToolbar {  }
+fun ToolBarPreview() {
+    TextFormatToolbar { }
 }

@@ -36,7 +36,10 @@ fun MessageCard(
     onClick: (Message) -> Unit = {},
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable { onClick(message) },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { onClick(message) },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors =

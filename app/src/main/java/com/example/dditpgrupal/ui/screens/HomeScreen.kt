@@ -89,7 +89,10 @@ fun HomeScreen(
                         modifier =
                             Modifier
                                 .size(56.dp)
-                                .background(MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.15f), CircleShape),
+                                .background(
+                                    MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.15f),
+                                    CircleShape,
+                                ),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(

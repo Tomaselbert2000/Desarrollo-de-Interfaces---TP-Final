@@ -137,7 +137,10 @@ fun PracticeSubmitScreen(
                             readOnly = true,
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                             shape = RoundedCornerShape(12.dp),
-                            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                            modifier =
+                                Modifier
+                                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+                                    .fillMaxWidth(),
                             textStyle = MaterialTheme.typography.bodyMedium,
                         )
                         ExposedDropdownMenu(
@@ -245,7 +248,10 @@ fun PracticeSubmitScreen(
                             modifier =
                                 Modifier
                                     .size(40.dp)
-                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(10.dp),
+                                    ),
                         ) {
                             Icon(
                                 imageVector = if (hasAttachment) Icons.Default.Description else Icons.Default.AttachFile,
@@ -259,7 +265,10 @@ fun PracticeSubmitScreen(
                             modifier =
                                 Modifier
                                     .size(40.dp)
-                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(10.dp),
+                                    ),
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Image,
@@ -273,7 +282,10 @@ fun PracticeSubmitScreen(
                             modifier =
                                 Modifier
                                     .size(40.dp)
-                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(10.dp)),
+                                    .background(
+                                        MaterialTheme.colorScheme.surface,
+                                        RoundedCornerShape(10.dp),
+                                    ),
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Drafts,
@@ -289,8 +301,10 @@ fun PracticeSubmitScreen(
                     Box(
                         modifier =
                             Modifier
-                                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(14.dp))
-                                .clickable { onSend(selectedTeacher, message) }
+                                .background(
+                                    MaterialTheme.colorScheme.primary,
+                                    RoundedCornerShape(14.dp),
+                                ).clickable { onSend(selectedTeacher, message) }
                                 .padding(horizontal = 24.dp, vertical = 12.dp),
                     ) {
                         Row(

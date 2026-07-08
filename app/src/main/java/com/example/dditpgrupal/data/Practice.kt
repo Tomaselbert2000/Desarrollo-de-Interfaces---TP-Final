@@ -11,7 +11,13 @@ val dummyPracticeList =
             PracticeStatus.CORREGIDA,
             grade = 8,
             madeInGroup = true,
-            groupMembers = listOf("Tomas Gabriel Elbert", "Maximo Assad", "Rodrigo Roldan", "Camila Suárez"),
+            groupMembers =
+                listOf(
+                    "Tomas Gabriel Elbert",
+                    "Maximo Assad",
+                    "Rodrigo Roldan",
+                    "Camila Suárez",
+                ),
         ),
         Practice("Prueba escrita", PracticeStatus.PENDIENTE),
         Practice("Actividad en clase - Unidad 3", PracticeStatus.PENDIENTE),

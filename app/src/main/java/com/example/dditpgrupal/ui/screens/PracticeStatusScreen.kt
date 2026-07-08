@@ -20,8 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
@@ -161,7 +161,10 @@ fun PracticeStatusScreen(
 
                     when (practice.status) {
                         PracticeStatus.CORREGIDA -> {
-                            CorrectedContent(practice, onRequestReview = { showReviewDialog = true })
+                            CorrectedContent(
+                                practice,
+                                onRequestReview = { showReviewDialog = true },
+                            )
                         }
 
                         PracticeStatus.SOLICITADA -> {
@@ -355,7 +358,10 @@ private fun CorrectedContent(
         ) {
             Column {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
@@ -431,12 +437,13 @@ private fun CorrectedContent(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(32.dp)
-                        .background(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                            RoundedCornerShape(8.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(32.dp)
+                            .background(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                RoundedCornerShape(8.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -455,18 +462,20 @@ private fun CorrectedContent(
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
             )
 
             Text(
-                text = "Se corrigió la actividad evaluando los criterios establecidos " +
-                    "en la rúbrica. Se observa un buen desarrollo conceptual aunque " +
-                    "faltan algunos detalles en la implementación práctica. " +
-                    "Se recomienda revisar los ejemplos de la unidad 3 para " +
-                    "mejorar la resolución de ejercicios similares.",
+                text =
+                    "Se corrigió la actividad evaluando los criterios establecidos " +
+                        "en la rúbrica. Se observa un buen desarrollo conceptual aunque " +
+                        "faltan algunos detalles en la implementación práctica. " +
+                        "Se recomienda revisar los ejemplos de la unidad 3 para " +
+                        "mejorar la resolución de ejercicios similares.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -484,18 +493,20 @@ private fun CorrectedContent(
         onClick = onRequestReview,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .background(
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        RoundedCornerShape(10.dp),
-                    ),
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            RoundedCornerShape(10.dp),
+                        ),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -546,12 +557,13 @@ private fun ReviewRequestedContent(practice: Practice) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f),
-                            RoundedCornerShape(10.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(
+                                MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f),
+                                RoundedCornerShape(10.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -577,16 +589,18 @@ private fun ReviewRequestedContent(practice: Practice) {
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
             )
 
             Text(
-                text = "Su solicitud de revisión se encuentra pendiente de respuesta. " +
-                    "Un docente evaluará los fundamentos presentados y emitirá una resolución " +
-                    "a la brevedad.",
+                text =
+                    "Su solicitud de revisión se encuentra pendiente de respuesta. " +
+                        "Un docente evaluará los fundamentos presentados y emitirá una resolución " +
+                        "a la brevedad.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -635,19 +649,21 @@ private fun AcceptedContent(practice: Practice) {
         colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                            RoundedCornerShape(10.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                RoundedCornerShape(10.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -673,10 +689,11 @@ private fun AcceptedContent(practice: Practice) {
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
             )
 
             Row(
@@ -697,10 +714,11 @@ private fun AcceptedContent(practice: Practice) {
                     )
                 }
                 Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .height(48.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                    modifier =
+                        Modifier
+                            .width(1.dp)
+                            .height(48.dp)
+                            .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
                 )
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -766,12 +784,13 @@ private fun RejectedContent(practice: Practice) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
-                            RoundedCornerShape(10.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(
+                                MaterialTheme.colorScheme.error.copy(alpha = 0.1f),
+                                RoundedCornerShape(10.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -798,10 +817,11 @@ private fun RejectedContent(practice: Practice) {
 
             if (!practice.reviewResponse.isNullOrBlank()) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
                 )
 
                 Text(
@@ -812,13 +832,13 @@ private fun RejectedContent(practice: Practice) {
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.4f),
-                        RoundedCornerShape(8.dp),
-                    )
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(
+                            MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.4f),
+                            RoundedCornerShape(8.dp),
+                        ).padding(horizontal = 12.dp, vertical = 8.dp),
             ) {
                 Text(
                     text = "La nota final se mantiene sin modificaciones.",
@@ -849,12 +869,13 @@ private fun RevisionContent(practice: Practice) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
-                            RoundedCornerShape(10.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(
+                                MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
+                                RoundedCornerShape(10.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -881,10 +902,11 @@ private fun RevisionContent(practice: Practice) {
 
             if (!practice.reviewResponse.isNullOrBlank()) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
                 )
 
                 Text(
@@ -906,18 +928,20 @@ private fun RevisionContent(practice: Practice) {
             colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(
-                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
-                            RoundedCornerShape(10.dp),
-                        ),
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .background(
+                                MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
+                                RoundedCornerShape(10.dp),
+                            ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -956,18 +980,20 @@ private fun GradeCard(grade: Int) {
         colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        RoundedCornerShape(12.dp),
-                    ),
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            RoundedCornerShape(12.dp),
+                        ),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(

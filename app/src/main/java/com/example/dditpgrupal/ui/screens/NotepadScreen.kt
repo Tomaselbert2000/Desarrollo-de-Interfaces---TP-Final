@@ -115,7 +115,10 @@ fun NotepadScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalItemSpacing = 8.dp,
                 ) {
-                    itemsIndexed(notes, key = { _, note -> note.name + note.creationDate }) { index, note ->
+                    itemsIndexed(
+                        notes,
+                        key = { _, note -> note.name + note.creationDate },
+                    ) { index, note ->
                         val isDragging = draggedItemIndex == index
                         Box(
                             modifier =
@@ -128,10 +131,21 @@ fun NotepadScreen(
                                         translationY = if (isDragging) dragOffset.y else 0f
                                         scaleX = if (isDragging) 1.05f else 1f
                                         scaleY = if (isDragging) 1.05f else 1f
-                                        rotationZ = if (isDragging) (dragOffset.x * 0.03f).coerceIn(-3f, 3f) else 0f
+                                        rotationZ =
+                                            if (isDragging) {
+                                                (dragOffset.x * 0.03f).coerceIn(
+                                                    -3f,
+                                                    3f,
+                                                )
+                                            } else {
+                                                0f
+                                            }
                                         shadowElevation = if (isDragging) 12f else 0f
                                     }.onSizeChanged { size ->
-                                        itemHeights = itemHeights.toMutableMap().apply { put(index, size.height) }
+                                        itemHeights =
+                                            itemHeights
+                                                .toMutableMap()
+                                                .apply { put(index, size.height) }
                                         if (itemWidth == 0) itemWidth = size.width
                                     }.pointerInput(Unit) {
                                         detectDragGesturesAfterLongPress(
@@ -144,8 +158,12 @@ fun NotepadScreen(
                                                 dragOffset += dragAmount
                                             },
                                             onDragEnd = {
-                                                val draggedIdx = draggedItemIndex ?: return@detectDragGesturesAfterLongPress
-                                                val height = itemHeights[draggedIdx] ?: return@detectDragGesturesAfterLongPress
+                                                val draggedIdx =
+                                                    draggedItemIndex
+                                                        ?: return@detectDragGesturesAfterLongPress
+                                                val height =
+                                                    itemHeights[draggedIdx]
+                                                        ?: return@detectDragGesturesAfterLongPress
                                                 val col = draggedIdx % 2
                                                 val row = draggedIdx / 2
                                                 val halfWidth = (itemWidth / 2f).coerceAtLeast(1f)
@@ -158,7 +176,8 @@ fun NotepadScreen(
                                                 val deltaRow = (dragOffset.y / height).roundToInt()
                                                 val newCol = (col + deltaCol).coerceIn(0, 1)
                                                 val newRow = (row + deltaRow).coerceAtLeast(0)
-                                                val targetIndex = (newRow * 2 + newCol).coerceAtMost(notes.lastIndex)
+                                                val targetIndex =
+                                                    (newRow * 2 + newCol).coerceAtMost(notes.lastIndex)
                                                 if (targetIndex != draggedIdx) {
                                                     onReorder(draggedIdx, targetIndex)
                                                 }

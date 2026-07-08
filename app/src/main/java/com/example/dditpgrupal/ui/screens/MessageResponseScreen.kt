@@ -323,7 +323,10 @@ private fun MessageResponseScreenPreview() {
     )
 }
 
-private fun applyFormatting(text: String, toolIndex: Int): String {
+private fun applyFormatting(
+    text: String,
+    toolIndex: Int,
+): String {
     val prefix =
         when (toolIndex) {
             0 -> "**negrita**"

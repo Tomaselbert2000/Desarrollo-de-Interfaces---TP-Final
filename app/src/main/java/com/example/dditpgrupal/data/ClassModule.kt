@@ -17,7 +17,11 @@ val dummyModuleList =
             listOf(
                 StudyMaterial("Gu\u00eda de estudio - Unidad 1", "PDF", Icons.Default.PictureAsPdf),
                 StudyMaterial("Presentaci\u00f3n de materia", "PPT", Icons.Default.CoPresent),
-                StudyMaterial("Clase Grabada - Introducci\u00f3n", "Video", Icons.Default.PlayCircle),
+                StudyMaterial(
+                    "Clase Grabada - Introducci\u00f3n",
+                    "Video",
+                    Icons.Default.PlayCircle,
+                ),
             ),
         ),
         ClassModule(
@@ -40,14 +44,22 @@ val dummyModuleList =
             "M\u00f3dulo 4: Integraci\u00f3n",
             listOf(
                 StudyMaterial("Gu\u00eda de estudio - Unidad 4", "PDF", Icons.Default.PictureAsPdf),
-                StudyMaterial("Clase Grabada - Integraci\u00f3n", "Video", Icons.Default.PlayCircle),
+                StudyMaterial(
+                    "Clase Grabada - Integraci\u00f3n",
+                    "Video",
+                    Icons.Default.PlayCircle,
+                ),
                 StudyMaterial("Presentaci\u00f3n de cierre", "PPT", Icons.Default.CoPresent),
             ),
         ),
         ClassModule(
             "Bibliograf\u00eda obligatoria",
             listOf(
-                StudyMaterial("Libro: Fundamentos de programaci\u00f3n", "PDF", Icons.Default.PictureAsPdf),
+                StudyMaterial(
+                    "Libro: Fundamentos de programaci\u00f3n",
+                    "PDF",
+                    Icons.Default.PictureAsPdf,
+                ),
                 StudyMaterial("Paper: Arquitecturas modernas", "PDF", Icons.Default.Description),
             ),
         ),
@@ -59,7 +71,11 @@ val dummyModuleList =
                     "PDF",
                     Icons.AutoMirrored.Filled.Article,
                 ),
-                StudyMaterial("Video: Dise\u00f1o de interfaces", "Video", Icons.Default.PlayCircle),
+                StudyMaterial(
+                    "Video: Dise\u00f1o de interfaces",
+                    "Video",
+                    Icons.Default.PlayCircle,
+                ),
             ),
         ),
         ClassModule(

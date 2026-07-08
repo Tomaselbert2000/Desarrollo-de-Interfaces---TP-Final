@@ -71,7 +71,11 @@ fun MessageScreen(messages: List<Message> = dummyMessages) {
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().background(messagesBg).padding(innerPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(messagesBg)
+                    .padding(innerPadding),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
