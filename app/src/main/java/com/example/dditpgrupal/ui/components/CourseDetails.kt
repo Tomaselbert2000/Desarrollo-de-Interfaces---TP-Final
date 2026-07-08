@@ -627,7 +627,7 @@ fun CourseDetails(course: Course) {
             ) {
                 Text(
                     text = "Detalles académicos",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
@@ -663,7 +663,7 @@ fun CourseDetails(course: Course) {
             ) {
                 Text(
                     text = "Equipo docente",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 

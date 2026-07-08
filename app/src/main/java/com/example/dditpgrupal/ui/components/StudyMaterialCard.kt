@@ -61,7 +61,7 @@ fun StudyMaterialCard(
             ) {
                 Text(
                     text = material.name,
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

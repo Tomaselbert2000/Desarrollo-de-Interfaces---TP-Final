@@ -127,7 +127,7 @@ fun CourseMenu(
             Text(
                 text = course.name,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier =
                     Modifier
                         .weight(1f)
