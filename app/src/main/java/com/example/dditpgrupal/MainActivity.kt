@@ -38,7 +38,10 @@ import com.example.dditpgrupal.ui.screens.HomeScreen
 import com.example.dditpgrupal.ui.screens.LoginScreen
 import com.example.dditpgrupal.ui.screens.MessageScreen
 import com.example.dditpgrupal.ui.screens.NewsDetailScreen
+import com.example.dditpgrupal.ui.screens.PracticeFilterScreen
+import com.example.dditpgrupal.ui.screens.ProfileEditionScreen
 import com.example.dditpgrupal.ui.screens.ProfileScreen
+import com.example.dditpgrupal.ui.screens.ScheduleScreen
 import com.example.dditpgrupal.ui.theme.DDITPGrupalTheme
 
 class MainActivity : ComponentActivity() {
@@ -126,6 +129,10 @@ fun AppNavigation() {
                             val index = dummyNewsList.indexOf(news)
                             navController.navigate("news/$index")
                         },
+                        onProfileClick = { navController.navigate("profile") },
+                        onCoursesClick = { navController.navigate("courses") },
+                        onPracticesClick = { navController.navigate("practice_list") },
+                        onEventsClick = { navController.navigate("schedule/0") },
                     )
                 }
                 composable("courses") {
@@ -159,7 +166,27 @@ fun AppNavigation() {
                     )
                 }
                 composable("profile") {
-                    ProfileScreen()
+                    ProfileScreen(
+                        onEditClick = { navController.navigate("profile_edit") },
+                    )
+                }
+                composable("profile_edit") {
+                    ProfileEditionScreen(
+                        onBackClick = { navController.popBackStack() },
+                        onSaveClick = { navController.popBackStack() },
+                    )
+                }
+                composable("practice_list") {
+                    PracticeFilterScreen(
+                        onBackClick = { navController.popBackStack() },
+                    )
+                }
+                composable(
+                    route = "schedule/{courseIndex}",
+                    arguments = listOf(navArgument("courseIndex") { type = NavType.IntType }),
+                ) { backStackEntry ->
+                    val courseIndex = backStackEntry.arguments?.getInt("courseIndex") ?: 0
+                    ScheduleScreen(course = dummyCourseList[courseIndex])
                 }
             }
         }

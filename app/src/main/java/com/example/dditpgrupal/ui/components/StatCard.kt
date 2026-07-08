@@ -25,12 +25,15 @@ fun StatCard(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     value: String,
+    onClick: (() -> Unit)? = null,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        onClick = onClick ?: {},
+        enabled = onClick != null,
     ) {
         Column(
             modifier =

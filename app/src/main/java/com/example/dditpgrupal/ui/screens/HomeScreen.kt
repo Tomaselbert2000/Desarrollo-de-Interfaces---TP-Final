@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Grade
+import androidx.compose.material.icons.filled.PendingActions
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -44,9 +45,23 @@ import com.example.dditpgrupal.data.News
 import com.example.dditpgrupal.data.dummyCourseList
 import com.example.dditpgrupal.data.dummyNewsList
 import com.example.dditpgrupal.data.dummyPracticeList
+import com.example.dditpgrupal.data.enums.PracticeStatus
 import com.example.dditpgrupal.ui.components.NewsCard
 import com.example.dditpgrupal.ui.components.StatCard
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
+
+@Suppress("ktlint:standard:function-naming")
+@RequiresApi(Build.VERSION_CODES.O)
+private fun formatRelativeDate(date: LocalDate, today: LocalDate): String {
+    val daysUntil = ChronoUnit.DAYS.between(today, date)
+    return when {
+        daysUntil == 0L -> "Hoy"
+        daysUntil == 1L -> "Mañana"
+        daysUntil in 2..7 -> "En $daysUntil días"
+        else -> date.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    }
+}
 
 @Suppress("ktlint:standard:function-naming")
 @RequiresApi(Build.VERSION_CODES.O)
@@ -55,6 +70,10 @@ fun HomeScreen(
     courseList: List<Course> = dummyCourseList,
     newsList: List<News> = dummyNewsList,
     onNewsClick: (News) -> Unit = {},
+    onProfileClick: () -> Unit = {},
+    onCoursesClick: () -> Unit = {},
+    onPracticesClick: () -> Unit = {},
+    onEventsClick: () -> Unit = {},
 ) {
     val homeBg by animateColorAsState(
         targetValue = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.10f),
@@ -89,6 +108,7 @@ fun HomeScreen(
                         modifier =
                             Modifier
                                 .size(56.dp)
+                                .clickable { onProfileClick() }
                                 .background(
                                     MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.15f),
                                     CircleShape,
@@ -130,18 +150,21 @@ fun HomeScreen(
                     icon = Icons.Default.Book,
                     label = "Materias",
                     value = "${courseList.size}",
+                    onClick = onCoursesClick,
                 )
                 StatCard(
                     modifier = Modifier.weight(1f),
-                    icon = Icons.Default.Grade,
-                    label = "Pr\u00e1cticas",
-                    value = "${dummyPracticeList.size}",
+                    icon = Icons.Default.PendingActions,
+                    label = "Pendientes",
+                    value = "${dummyPracticeList.count { it.status == PracticeStatus.PENDIENTE }}",
+                    onClick = onPracticesClick,
                 )
                 StatCard(
                     modifier = Modifier.weight(1f),
                     icon = Icons.Default.CalendarMonth,
                     label = "Eventos",
                     value = "${upcomingDates.size}",
+                    onClick = onEventsClick,
                 )
             }
         }
@@ -189,8 +212,9 @@ fun HomeScreen(
                                     )
                                 }
                                 Text(
-                                    text = "${date.dayOfMonth}/${date.monthValue}/${date.year}",
+                                    text = formatRelativeDate(date, today),
                                     style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = if (ChronoUnit.DAYS.between(today, date) <= 1L) FontWeight.SemiBold else FontWeight.Normal,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
