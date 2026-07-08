@@ -39,7 +39,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
@@ -56,7 +55,6 @@ import kotlin.math.roundToInt
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NotepadScreen(
-    courseColor: Color,
     notes: List<Note>,
     onAddNote: () -> Unit = {},
     onEditNote: (Note) -> Unit = {},
@@ -193,7 +191,6 @@ fun NotepadScreen(
                         ) {
                             NoteCard(
                                 note = note,
-                                courseColor = courseColor,
                                 onEditNote = { onEditNote(note) },
                                 onDeleteNote = { onDeleteNote(note) },
                             )
@@ -205,26 +202,20 @@ fun NotepadScreen(
     }
 }
 
-private fun isColorDark(color: Color): Boolean = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) < 0.5
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun NoteCard(
     note: Note,
-    courseColor: Color,
     onEditNote: () -> Unit = {},
     onDeleteNote: () -> Unit = {},
 ) {
-    val bgColor = courseColor
-    val textColor = if (isColorDark(bgColor)) Color.White else Color(0xFF1C1B1F)
-
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        colors = CardDefaults.cardColors(containerColor = bgColor),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -233,7 +224,7 @@ private fun NoteCard(
                 text = note.name,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = textColor,
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -241,7 +232,7 @@ private fun NoteCard(
             Text(
                 text = note.storedText,
                 style = MaterialTheme.typography.bodyMedium,
-                color = textColor.copy(alpha = 0.8f),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -256,7 +247,7 @@ private fun NoteCard(
                 Text(
                     text = "${note.creationDate.dayOfMonth}/${note.creationDate.monthValue}/${note.creationDate.year}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = textColor.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     modifier = Modifier.weight(1f),
                 )
 
@@ -264,7 +255,7 @@ private fun NoteCard(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Editar nota",
-                        tint = if (isColorDark(bgColor)) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
 
@@ -272,7 +263,7 @@ private fun NoteCard(
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Eliminar nota",
-                        tint = if (isColorDark(bgColor)) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.error,
+                        tint = MaterialTheme.colorScheme.error,
                     )
                 }
             }
@@ -285,5 +276,5 @@ private fun NoteCard(
 @Preview
 @Composable
 private fun NotepadScreenPreview() {
-    NotepadScreen(courseColor = Color(0xFF80CBC4), notes = dummyNotesList)
+    NotepadScreen(notes = dummyNotesList)
 }

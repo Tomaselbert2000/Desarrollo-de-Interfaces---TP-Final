@@ -53,8 +53,9 @@ enum class ScreenView { MENU_PRINCIPAL, ENVIAR_PRACTICA, CREAR_NOTA, VER_ESTADO_
 fun CourseMenu(
     course: Course,
     onBackClick: () -> Unit = {},
+    initialTabIndex: Int = 0,
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var selectedTabIndex by remember(initialTabIndex) { mutableIntStateOf(initialTabIndex) }
     var currentScreen by remember { mutableStateOf(ScreenView.MENU_PRINCIPAL) }
     var selectedPractice by remember { mutableStateOf<Practice?>(null) }
     var practiceFilterIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -182,7 +183,6 @@ fun CourseMenu(
 
             3 -> {
                 NotepadScreen(
-                    courseColor = course.color,
                     notes = notes,
                     onAddNote = { currentScreen = ScreenView.CREAR_NOTA },
                     onEditNote = { note ->
