@@ -66,6 +66,7 @@ val dummyCourseList =
                     ),
                     seed = 1,
                 ),
+            grade = 8.5,
             color = CourseTeal,
         ),
         Course(
@@ -94,6 +95,7 @@ val dummyCourseList =
                     ),
                     seed = 2,
                 ),
+            grade = 6.0,
             color = CourseBlue,
         ),
         Course(
@@ -139,6 +141,7 @@ val dummyCourseList =
                     ),
                     seed = 3,
                 ),
+            grade = 4.0,
             color = CourseIndigo,
         ),
         Course(
@@ -185,6 +188,7 @@ val dummyCourseList =
                     ),
                     seed = 4,
                 ),
+            grade = 9.0,
             color = CoursePurple,
         ),
         Course(
@@ -231,6 +235,7 @@ val dummyCourseList =
                     ),
                     seed = 5,
                 ),
+            grade = 7.5,
             color = CourseOrange,
         ),
         Course(
@@ -278,6 +283,7 @@ val dummyCourseList =
                     ),
                     seed = 6,
                 ),
+            grade = 2.0,
             color = CourseTealDark,
         ),
         Course(
@@ -300,6 +306,7 @@ val dummyCourseList =
                     importantDates = emptyList(),
                     seed = 7,
                 ),
+            grade = 5.5,
             color = CourseRed,
         ),
     )
@@ -362,5 +369,6 @@ data class Course
         val semesterStart: LocalDate = LocalDate.of(2026, 3, 16),
         val semesterEnd: LocalDate = LocalDate.of(2026, 7, 17),
         val studyHabits: Map<LocalDate, Int> = emptyMap(),
+        val grade: Double = 0.0,
         val color: Color,
     )

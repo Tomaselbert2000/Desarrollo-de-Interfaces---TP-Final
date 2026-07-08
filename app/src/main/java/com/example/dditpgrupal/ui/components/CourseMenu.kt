@@ -182,6 +182,7 @@ fun CourseMenu(
 
             3 -> {
                 NotepadScreen(
+                    courseColor = course.color,
                     notes = notes,
                     onAddNote = { currentScreen = ScreenView.CREAR_NOTA },
                     onEditNote = { note ->
@@ -189,6 +190,10 @@ fun CourseMenu(
                         currentScreen = ScreenView.CREAR_NOTA
                     },
                     onDeleteNote = { note -> notes.remove(note) },
+                    onReorder = { from, to ->
+                        val item = notes.removeAt(from)
+                        notes.add(to, item)
+                    },
                 )
             }
 

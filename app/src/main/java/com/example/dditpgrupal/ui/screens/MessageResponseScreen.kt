@@ -2,6 +2,10 @@ package com.example.dditpgrupal.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dditpgrupal.data.Message
 import com.example.dditpgrupal.data.dummyMessages
+import com.example.dditpgrupal.ui.components.TextFormatToolbar
 
 data class ChatMessage(
     val senderName: String,
@@ -156,11 +161,25 @@ fun MessageResponseScreen(
                     .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            AnimatedVisibility(
+                visible = true,
+                enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+                exit = fadeOut(),
+            ) {
+                TextFormatToolbar(
+                    onToolClick = { index ->
+                        replyText = applyFormatting(replyText, index)
+                    },
+                )
+            }
+
             OutlinedTextField(
                 value = replyText,
                 onValueChange = { replyText = it },
                 placeholder = { Text("Escrib\u00ed tu respuesta...") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 colors =
@@ -302,4 +321,18 @@ private fun MessageResponseScreenPreview() {
         message = dummyMessages.first(),
         onBackClick = {},
     )
+}
+
+private fun applyFormatting(text: String, toolIndex: Int): String {
+    val prefix =
+        when (toolIndex) {
+            0 -> "**negrita**"
+            1 -> "*cursiva*"
+            2 -> "<u>subrayado</u>"
+            3 -> "\n- Elemento de lista"
+            4 -> "\n> Cita"
+            5 -> "[Bot\u00f3n]"
+            else -> ""
+        }
+    return if (text.isBlank()) prefix else "$text $prefix"
 }

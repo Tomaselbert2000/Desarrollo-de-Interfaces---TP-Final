@@ -3,7 +3,7 @@ package com.example.dditpgrupal.ui.screens
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,22 +14,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EditNote
-import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,31 +38,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.dditpgrupal.data.Note
 import com.example.dditpgrupal.data.dummyNotesList
+import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NotepadScreen(
+    courseColor: Color,
     notes: List<Note>,
     onAddNote: () -> Unit = {},
     onEditNote: (Note) -> Unit = {},
     onDeleteNote: (Note) -> Unit = {},
+    onReorder: (Int, Int) -> Unit = { _, _ -> },
 ) {
-    var filterOption by remember { mutableStateOf("Todas") }
-    var filterExpanded by remember { mutableStateOf(false) }
-
-    val filteredNotes =
-        when (filterOption) {
-            "Importantes" -> notes.filter { it.isImportant }
-            "Normal" -> notes.filter { !it.isImportant }
-            else -> notes
-        }
+    var draggedItemIndex by remember { mutableStateOf<Int?>(null) }
+    var dragOffset by remember { mutableStateOf(Offset.Zero) }
+    var itemHeights by remember { mutableStateOf(mutableMapOf<Int, Int>()) }
+    var itemWidth by remember { mutableStateOf(0) }
 
     Scaffold(
         floatingActionButton = {
@@ -83,85 +82,7 @@ fun NotepadScreen(
         Column(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
         ) {
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(16.dp)
-                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
-                    )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = "Importantes",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(16.dp)
-                                .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape),
-                    )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = "Normal",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Box {
-                    IconButton(onClick = { filterExpanded = true }) {
-                        Icon(
-                            imageVector = Icons.Default.FilterAlt,
-                            contentDescription = "Filtrar",
-                            tint =
-                                if (filterOption !=
-                                    "Todas"
-                                ) {
-                                    MaterialTheme.colorScheme.primary
-                                } else {
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                                },
-                        )
-                    }
-
-                    DropdownMenu(
-                        expanded = filterExpanded,
-                        onDismissRequest = { filterExpanded = false },
-                    ) {
-                        listOf("Todas", "Normal", "Importantes").forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option) },
-                                onClick = {
-                                    filterOption = option
-                                    filterExpanded = false
-                                },
-                            )
-                        }
-                    }
-                }
-            }
-
-            if (filteredNotes.isEmpty()) {
+            if (notes.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -194,12 +115,70 @@ fun NotepadScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalItemSpacing = 8.dp,
                 ) {
-                    items(filteredNotes, key = { it.name + it.creationDate }) { note ->
-                        NoteCard(
-                            note = note,
-                            onEditNote = { onEditNote(note) },
-                            onDeleteNote = { onDeleteNote(note) },
-                        )
+                    itemsIndexed(notes, key = { _, note -> note.name + note.creationDate }) { index, note ->
+                        val isDragging = draggedItemIndex == index
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .animateItem()
+                                    .zIndex(if (isDragging) 1f else 0f)
+                                    .graphicsLayer {
+                                        translationX = if (isDragging) dragOffset.x else 0f
+                                        translationY = if (isDragging) dragOffset.y else 0f
+                                        scaleX = if (isDragging) 1.05f else 1f
+                                        scaleY = if (isDragging) 1.05f else 1f
+                                        rotationZ = if (isDragging) (dragOffset.x * 0.03f).coerceIn(-3f, 3f) else 0f
+                                        shadowElevation = if (isDragging) 12f else 0f
+                                    }.onSizeChanged { size ->
+                                        itemHeights = itemHeights.toMutableMap().apply { put(index, size.height) }
+                                        if (itemWidth == 0) itemWidth = size.width
+                                    }.pointerInput(Unit) {
+                                        detectDragGesturesAfterLongPress(
+                                            onDragStart = {
+                                                draggedItemIndex = index
+                                                dragOffset = Offset.Zero
+                                            },
+                                            onDrag = { change, dragAmount ->
+                                                change.consume()
+                                                dragOffset += dragAmount
+                                            },
+                                            onDragEnd = {
+                                                val draggedIdx = draggedItemIndex ?: return@detectDragGesturesAfterLongPress
+                                                val height = itemHeights[draggedIdx] ?: return@detectDragGesturesAfterLongPress
+                                                val col = draggedIdx % 2
+                                                val row = draggedIdx / 2
+                                                val halfWidth = (itemWidth / 2f).coerceAtLeast(1f)
+                                                val deltaCol =
+                                                    when {
+                                                        dragOffset.x > halfWidth -> 1
+                                                        dragOffset.x < -halfWidth -> -1
+                                                        else -> 0
+                                                    }
+                                                val deltaRow = (dragOffset.y / height).roundToInt()
+                                                val newCol = (col + deltaCol).coerceIn(0, 1)
+                                                val newRow = (row + deltaRow).coerceAtLeast(0)
+                                                val targetIndex = (newRow * 2 + newCol).coerceAtMost(notes.lastIndex)
+                                                if (targetIndex != draggedIdx) {
+                                                    onReorder(draggedIdx, targetIndex)
+                                                }
+                                                draggedItemIndex = null
+                                                dragOffset = Offset.Zero
+                                            },
+                                            onDragCancel = {
+                                                draggedItemIndex = null
+                                                dragOffset = Offset.Zero
+                                            },
+                                        )
+                                    },
+                        ) {
+                            NoteCard(
+                                note = note,
+                                courseColor = courseColor,
+                                onEditNote = { onEditNote(note) },
+                                onDeleteNote = { onDeleteNote(note) },
+                            )
+                        }
                     }
                 }
             }
@@ -207,33 +186,26 @@ fun NotepadScreen(
     }
 }
 
+private fun isColorDark(color: Color): Boolean = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) < 0.5
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun NoteCard(
     note: Note,
+    courseColor: Color,
     onEditNote: () -> Unit = {},
     onDeleteNote: () -> Unit = {},
 ) {
-    val containerColor =
-        if (note.isImportant) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.tertiaryContainer
-        }
-    val onContainerColor =
-        if (note.isImportant) {
-            MaterialTheme.colorScheme.onPrimaryContainer
-        } else {
-            MaterialTheme.colorScheme.onTertiaryContainer
-        }
+    val bgColor = courseColor
+    val textColor = if (isColorDark(bgColor)) Color.White else Color(0xFF1C1B1F)
 
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-        colors = CardDefaults.cardColors(containerColor = containerColor),
+        colors = CardDefaults.cardColors(containerColor = bgColor),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -242,7 +214,7 @@ private fun NoteCard(
                 text = note.name,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = onContainerColor,
+                color = textColor,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -250,7 +222,7 @@ private fun NoteCard(
             Text(
                 text = note.storedText,
                 style = MaterialTheme.typography.bodyMedium,
-                color = onContainerColor.copy(alpha = 0.8f),
+                color = textColor.copy(alpha = 0.8f),
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -265,7 +237,7 @@ private fun NoteCard(
                 Text(
                     text = "${note.creationDate.dayOfMonth}/${note.creationDate.monthValue}/${note.creationDate.year}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = onContainerColor.copy(alpha = 0.7f),
+                    color = textColor.copy(alpha = 0.7f),
                     modifier = Modifier.weight(1f),
                 )
 
@@ -273,7 +245,7 @@ private fun NoteCard(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Editar nota",
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = if (isColorDark(bgColor)) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primary,
                     )
                 }
 
@@ -281,7 +253,7 @@ private fun NoteCard(
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Eliminar nota",
-                        tint = MaterialTheme.colorScheme.error,
+                        tint = if (isColorDark(bgColor)) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.error,
                     )
                 }
             }
@@ -294,5 +266,5 @@ private fun NoteCard(
 @Preview
 @Composable
 private fun NotepadScreenPreview() {
-    NotepadScreen(notes = dummyNotesList)
+    NotepadScreen(courseColor = Color(0xFF80CBC4), notes = dummyNotesList)
 }
